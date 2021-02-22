@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Music</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        input:focus {
+            box-shadow: none!important;
+        }
+        .bg-dark, .table-dark, .btn-dark {
+            background-color: #141414 !important;
+        }
+    </style>
+</head>
+<body class="bg-dark">
+<div class="container-fluid">
+    <div class="bg-dark pt-2 pb-2 fixed-top"
+         style="padding-right: 15px; padding-left: 15px; border-bottom: 5px solid #C20C0C; display: inline-flex;">
+        <div class="text-light align-self-center" style="font-size: x-large;">
+            <i class="fa fa-search" aria-hidden="true"></i></div>
+        <form class="w-100" action="/music" method="post">
+            <input type="text" id="s_song" name="s_song" value="{{ s_song }}"
+                   class="form-control bg-dark text-light border-0"
+                   autocomplete="off" placeholder="搜索">
+        </form>
+    </div>
+    <div class="row" style="margin-top: 70px; margin-bottom: 64px;">
+        {% for result in results %}
+        <div class="col">
+            <h5 class="text-light">{{ result.platform }}</h5>
+            <table class="table table-sm table-dark table-hover">
+                <thead>
+                <tr>
+                    <th>歌曲名</th>
+                    <th>歌手</th>
+                    <th>时长</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for song in result.song_list %}
+                <tr>
+                    <td>{{ song.name }}</td>
+                    <td>{{ song.singer }}</td>
+                    <td>{{ song.duration }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="pt-2 pb-2 fixed-bottom"
+         style="padding-right: 15px; padding-left: 15px; background-color: #242424!important; display: inline-flex;">
+        <div class="text-light align-self-center" style="font-size: x-large;">
+            <i class="fa fa-step-backward" aria-hidden="true"></i></div>
+        <div class="text-light ml-2 align-self-center" style="font-size: xx-large;">
+            <i class="fa fa-play" aria-hidden="true"></i></div>
+        <div class="text-light ml-2 align-self-center" style="font-size: x-large;">
+            <i class="fa fa-step-forward" aria-hidden="true"></i></div>
+        <div class="w-100 bg-secondary ml-2 align-self-center" style="height: 0.5rem;">
+            <div class="bg-light" style="width:70%; height: 0.5rem;"></div>
+        </div>
+        <div class="text-light ml-2 align-self-center" style="font-size: x-large;">
+            <i class="fa fa-volume-up" aria-hidden="true" data-toggle="popover"
+               data-placement="top" data-content="as"></i>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        var s_song = $('#s_song').val();
+        $('#s_song').val('').focus().val(s_song);
+
+        $('i.fa').click(function(){
+            if($(this).attr('class') == 'fa fa-play'){
+                $(this).attr('class', 'fa fa-stop')
+            }else if($(this).attr('class') == 'fa fa-stop'){
+                $(this).attr('class', 'fa fa-play')
+            }
+        });
+
+        $('[data-toggle="popover"]').popover();
+    });
+
+
+</script>
+</body>
+</html>
