@@ -15,7 +15,14 @@
             box-shadow: none!important;
         }
         .bg-dark, .table-dark, .btn-dark {
-            background-color: #141414 !important;
+            background-color: #141414!important;
+        }
+        i.fa {
+             color: #666;
+        }
+        .song-list i.fa:hover, .play-bar i.fa:hover {
+            color: #f8f9fa;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -23,7 +30,7 @@
 <div class="container-fluid">
     <div class="bg-dark pt-2 pb-2 fixed-top"
          style="padding-right: 15px; padding-left: 15px; border-bottom: 5px solid #C20C0C; display: inline-flex;">
-        <div class="text-light align-self-center" style="font-size: x-large;">
+        <div class="align-self-center" style="font-size: larger;">
             <i class="fa fa-search" aria-hidden="true"></i></div>
         <form class="w-100" action="/music" method="post">
             <input type="text" id="s_song" name="s_song" value="{{ s_song }}"
@@ -35,19 +42,28 @@
         {% for result in results %}
         <div class="col">
             <h5 class="text-light">{{ result.platform }}</h5>
-            <table class="table table-sm table-dark table-hover">
+            <table class="table table-sm table-dark table-hover song-list">
                 <thead>
                 <tr>
-                    <th>歌曲名</th>
+                    <th>歌曲标题</th>
                     <th>歌手</th>
+                    <th>专辑</th>
                     <th>时长</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for song in result.song_list %}
                 <tr>
-                    <td>{{ song.name }}</td>
+                    <td>
+                        <div class="align-self-center" style="font-size: larger;">
+                            <i song-id="{{ song.id }}" song-name="{{ song.name }}" song-singer="{{ song.singer }}"
+                               album-pic="{{ song.album_pic }}" song-duration="{{ song.duration }}"
+                               class="fa fa-play-circle-o" aria-hidden="true"></i>
+                            {{ song.name }}
+                        </div>
+                    </td>
                     <td>{{ song.singer }}</td>
+                    <td>《{{ song.album }}》</td>
                     <td>{{ song.duration }}</td>
                 </tr>
                 {% endfor %}
@@ -56,18 +72,32 @@
         </div>
         {% endfor %}
     </div>
-    <div class="pt-2 pb-2 fixed-bottom"
-         style="padding-right: 15px; padding-left: 15px; background-color: #242424!important; display: inline-flex;">
-        <div class="text-light align-self-center" style="font-size: x-large;">
+    <div class="pt-2 pb-2 fixed-bottom play-bar"
+         style="padding-right: 15px; padding-left: 15px; background-color: #242424; display: inline-flex;">
+        <audio id="audio" src=""></audio>
+        <div class="align-self-center" style="font-size: large;">
             <i class="fa fa-step-backward" aria-hidden="true"></i></div>
-        <div class="text-light ml-2 align-self-center" style="font-size: xx-large;">
-            <i class="fa fa-play" aria-hidden="true"></i></div>
-        <div class="text-light ml-2 align-self-center" style="font-size: x-large;">
+        <div class="ml-3 align-self-center" style="font-size: xx-large;">
+            <i id="play-pause" class="fa fa-play-circle-o" aria-hidden="true"></i></div>
+        <div class="ml-3 align-self-center" style="font-size: large;">
             <i class="fa fa-step-forward" aria-hidden="true"></i></div>
-        <div class="w-100 bg-secondary ml-2 align-self-center" style="height: 0.5rem;">
-            <div class="bg-light" style="width:70%; height: 0.5rem;"></div>
+        <div class="ml-4 align-self-center">
+            <img id="album-pic" src="{{ url_for('static', filename='favicon.ico') }}" width="46" height="46">
         </div>
-        <div class="text-light ml-2 align-self-center" style="font-size: x-large;">
+        <div class="ml-3 w-100">
+            <div style="height: 32px;">
+                <span id="song-name" style="color: #e8e8e8"></span>
+                <span id="song-singer" class="ml-2" style="color: #9b9b9b;"></span>
+                <div class="float-right" style="color: #797979;">
+                    <span id="song-currentTime" style="color: #a1a1a1;">00:00</span> /
+                    <span id="song-duration">00:00</span>
+                </div>
+            </div>
+            <div class="align-self-center" style="background-color: #666;">
+                <div id="progress" style="width:0%; height: 0.3rem; background-color: #C20C0C;"></div>
+            </div>
+        </div>
+        <div class="ml-3 align-self-center" style="font-size: large;">
             <i class="fa fa-volume-up" aria-hidden="true" data-toggle="popover"
                data-placement="top" data-content="as"></i>
         </div>
@@ -75,17 +105,55 @@
 </div>
 <script>
     $(document).ready(function(){
+        var audio = document.getElementById('audio');
         var s_song = $('#s_song').val();
         $('#s_song').val('').focus().val(s_song);
-
-        $('i.fa').click(function(){
-            if($(this).attr('class') == 'fa fa-play'){
-                $(this).attr('class', 'fa fa-stop')
-            }else if($(this).attr('class') == 'fa fa-stop'){
-                $(this).attr('class', 'fa fa-play')
-            }
+        $('.song-list i.fa').click(function(){
+            $('.song-list i.fa').css("color", "#666");
+            $(this).css("color", "#c20c0c");
+            var album_pic = $(this).attr('album-pic');
+            var song_name = $(this).attr('song-name');
+            var song_singer = $(this).attr('song-singer');
+            var song_duration = $(this).attr('song-duration');
+            $.get('/music/' + $(this).attr('song-id'), function(song_url){
+                $('#audio').attr('src', song_url);
+                $('#album-pic').attr('src', album_pic)
+                $('#song-name').text(song_name)
+                $('#song-singer').text(song_singer)
+                $('#song-duration').text(song_duration)
+                $('#play-pause').attr('class', 'fa fa-pause-circle-o')
+                audio.play()
+                var time = setInterval(function() {
+                    var total_millis = parseInt(audio.duration)
+                    var millis = parseInt(audio.currentTime)
+                    var seconds = millis % 60
+                    if(seconds < 10){
+                        seconds = '0' + seconds
+                    }
+                    var minutes = parseInt(millis / 60)
+                    if(minutes < 10){
+                        minutes = '0' + minutes
+                    }
+                    $('#song-currentTime').text(minutes + ':' + seconds)
+                    $('#progress').css('width', (millis * 100 / total_millis) + '%')
+                    if(audio.ended){
+                        $('#play-pause').attr('class', 'fa fa-play-circle-o')
+                    }
+                }, 1000);
+            });
         });
+        $('#play-pause').click(function(){
+            if(audio.currentSrc){
+                if($(this).attr('class') == 'fa fa-play-circle-o'){
+                    audio.play()
+                    $(this).attr('class', 'fa fa-pause-circle-o')
+                }else if($(this).attr('class') == 'fa fa-pause-circle-o'){
+                    audio.pause()
+                    $(this).attr('class', 'fa fa-play-circle-o')
+                }
+            }
 
+        });
         $('[data-toggle="popover"]').popover();
     });
 
