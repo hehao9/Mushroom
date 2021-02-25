@@ -1,0 +1,32 @@
+{% for result in results %}
+<div class="col">
+    <h5 class="text-light">{{ result.platform }}</h5>
+    <table class="table table-sm table-dark table-hover">
+        <thead>
+        <tr>
+            <th>歌曲标题</th>
+            <th>歌手</th>
+            <th>专辑</th>
+            <th>时长</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for song in result.song_list %}
+        <tr>
+            <td>
+                <div class="align-self-center" style="font-size: larger;">
+                    <i song-id="{{ song.id }}" song-name="{{ song.name }}" song-singer="{{ song.singer }}"
+                       album-pic="{{ song.album_pic }}" song-duration="{{ song.duration }}"
+                       class="fa fa-play-circle-o" aria-hidden="true"></i>
+                    {{ song.name }}
+                </div>
+            </td>
+            <td>{{ song.singer }}</td>
+            <td>《{{ song.album }}》</td>
+            <td>{{ song.duration }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endfor %}

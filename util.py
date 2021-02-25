@@ -42,11 +42,11 @@ def sign(text):
     return enc_text, enc_sec_key
 
 
-def search(s_song):
+def search(song_name):
     song_list = []
-    if s_song.strip():
+    if song_name.strip():
         url = 'https://music.163.com/weapi/cloudsearch/get/web?csrf_token='
-        text = {"hlpretag": "<span class=\"s-fc7\">", "hlposttag": "</span>", "s": s_song, "type": "1", "offset": "0",
+        text = {"hlpretag": "<span class=\"s-fc7\">", "hlposttag": "</span>", "s": song_name, "type": "1", "offset": "0",
                 "total": "true", "limit": "30", "csrf_token": ""}
         params, enc_sec_key = sign(text)
         data = {

@@ -7,9 +7,11 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css">
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
     <style>
         input:focus {
             box-shadow: none!important;
@@ -20,10 +22,40 @@
         i.fa {
              color: #666;
         }
-        .song-list i.fa:hover, .play-bar i.fa:hover {
+        #s_song_results i.fa:hover, .play-bar i.fa:hover {
             color: #f8f9fa;
             cursor: pointer;
         }
+        #song-progress {
+            width: 100%;
+            height: 18px;
+        }
+        #song-progress .slider-track {
+            height: 4px!important;
+        }
+        #song-progress .slider-selection {
+            background: #C20C0C;
+        }
+        #song-progress .slider-track-high {
+            background: #666;
+        }
+        #song-progress .slider-handle {
+            margin-left: -5px;
+            margin-top: 1px;
+            width: 10px;
+            height: 10px;
+            background: #f8f9fa;
+        }
+
+
+
+
+
+
+
+
+
+
     </style>
 </head>
 <body class="bg-dark">
@@ -32,46 +64,10 @@
          style="padding-right: 15px; padding-left: 15px; border-bottom: 5px solid #C20C0C; display: inline-flex;">
         <div class="align-self-center" style="font-size: larger;">
             <i class="fa fa-search" aria-hidden="true"></i></div>
-        <form class="w-100" action="/music" method="post">
-            <input type="text" id="s_song" name="s_song" value="{{ s_song }}"
-                   class="form-control bg-dark text-light border-0"
-                   autocomplete="off" placeholder="搜索">
-        </form>
+        <input id="s_song_name" type="text" class="form-control bg-dark text-light border-0 w-100"
+               autocomplete="off" placeholder="搜索"/>
     </div>
-    <div class="row" style="margin-top: 70px; margin-bottom: 64px;">
-        {% for result in results %}
-        <div class="col">
-            <h5 class="text-light">{{ result.platform }}</h5>
-            <table class="table table-sm table-dark table-hover song-list">
-                <thead>
-                <tr>
-                    <th>歌曲标题</th>
-                    <th>歌手</th>
-                    <th>专辑</th>
-                    <th>时长</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for song in result.song_list %}
-                <tr>
-                    <td>
-                        <div class="align-self-center" style="font-size: larger;">
-                            <i song-id="{{ song.id }}" song-name="{{ song.name }}" song-singer="{{ song.singer }}"
-                               album-pic="{{ song.album_pic }}" song-duration="{{ song.duration }}"
-                               class="fa fa-play-circle-o" aria-hidden="true"></i>
-                            {{ song.name }}
-                        </div>
-                    </td>
-                    <td>{{ song.singer }}</td>
-                    <td>《{{ song.album }}》</td>
-                    <td>{{ song.duration }}</td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% endfor %}
-    </div>
+    <div id="s_song_results" class="row" style="margin-top: 70px; margin-bottom: 64px;"></div>
     <div class="pt-2 pb-2 fixed-bottom play-bar"
          style="padding-right: 15px; padding-left: 15px; background-color: #242424; display: inline-flex;">
         <audio id="audio" src=""></audio>
@@ -84,8 +80,8 @@
         <div class="ml-4 align-self-center">
             <img id="album-pic" src="{{ url_for('static', filename='favicon.ico') }}" width="46" height="46">
         </div>
-        <div class="ml-3 w-100">
-            <div style="height: 32px;">
+        <div class="ml-4 w-100">
+            <div style="height: 24px;">
                 <span id="song-name" style="color: #e8e8e8"></span>
                 <span id="song-singer" class="ml-2" style="color: #9b9b9b;"></span>
                 <div class="float-right" style="color: #797979;">
@@ -93,69 +89,114 @@
                     <span id="song-duration">00:00</span>
                 </div>
             </div>
-            <div class="align-self-center" style="background-color: #666;">
-                <div id="progress" style="width:0%; height: 0.3rem; background-color: #C20C0C;"></div>
-            </div>
+            <!--            <div style="height: 0.2rem; background-color: #666;">-->
+            <!--                <div id="song-progress" class="float-left" style="width: 0%; height: 0.2rem; background-color: #C20C0C;"></div>-->
+            <!--                <div class="float-left" style="width:9px; height:9px; background-color: #f8f9fa; border-radius:50%; margin-top: -3px; margin-left: -9px;"></div>-->
+            <!--            </div>-->
+            <input id="song-progress-input" data-slider-id='song-progress'/>
         </div>
         <div class="ml-3 align-self-center" style="font-size: large;">
-            <i class="fa fa-volume-up" aria-hidden="true" data-toggle="popover"
-               data-placement="top" data-content="as"></i>
+            <i class="fa fa-volume-up" aria-hidden="true"></i>
+        </div>
+        <div class="ml-2 align-self-center" style="width: 100px; height: 3px; background-color: #666;">
+            <div id="volume-progress" class="float-left"
+                 style="width: 40%; height: 3px; background-color: #C20C0C;"></div>
+            <div class="float-left"
+                 style="width:7px; height:7px; background-color: #f8f9fa; border-radius:50%; margin-top: -2px; margin-left: -7px;"></div>
         </div>
     </div>
 </div>
 <script>
     $(document).ready(function(){
+        var timer = 0;
+        $('#s_song_name').focus();
         var audio = document.getElementById('audio');
-        var s_song = $('#s_song').val();
-        $('#s_song').val('').focus().val(s_song);
-        $('.song-list i.fa').click(function(){
-            $('.song-list i.fa').css("color", "#666");
-            $(this).css("color", "#c20c0c");
-            var album_pic = $(this).attr('album-pic');
-            var song_name = $(this).attr('song-name');
-            var song_singer = $(this).attr('song-singer');
-            var song_duration = $(this).attr('song-duration');
-            $.get('/music/' + $(this).attr('song-id'), function(song_url){
-                $('#audio').attr('src', song_url);
-                $('#album-pic').attr('src', album_pic)
-                $('#song-name').text(song_name)
-                $('#song-singer').text(song_singer)
-                $('#song-duration').text(song_duration)
-                $('#play-pause').attr('class', 'fa fa-pause-circle-o')
-                audio.play()
-                var time = setInterval(function() {
-                    var total_millis = parseInt(audio.duration)
-                    var millis = parseInt(audio.currentTime)
-                    var seconds = millis % 60
-                    if(seconds < 10){
-                        seconds = '0' + seconds
-                    }
-                    var minutes = parseInt(millis / 60)
-                    if(minutes < 10){
-                        minutes = '0' + minutes
-                    }
-                    $('#song-currentTime').text(minutes + ':' + seconds)
-                    $('#progress').css('width', (millis * 100 / total_millis) + '%')
-                    if(audio.ended){
-                        $('#play-pause').attr('class', 'fa fa-play-circle-o')
-                    }
-                }, 1000);
-            });
+        var song_progress = $('#song-progress-input').slider({step: 1, min: 0, max: 0, value: 0, tooltip: 'hide'});
+        var change_progress = function(result){
+            console.log(result)
+            var total_millis = parseInt(audio.duration)
+            song_progress.slider('setAttribute', 'max', total_millis);
+            if(result){
+                audio.currentTime = result;
+            }
+            var millis = parseInt(audio.currentTime)
+            song_progress.slider('setValue', millis);
+            var seconds = millis % 60
+            if(seconds < 10){
+                seconds = '0' + seconds
+            }
+            var minutes = parseInt(millis / 60)
+            if(minutes < 10){
+                minutes = '0' + minutes
+            }
+            $('#song-currentTime').text(minutes + ':' + seconds)
+            if(audio.ended){
+                $('#play-pause').attr('class', 'fa fa-play-circle-o')
+                clearInterval(timer);
+                $('#song-currentTime').text('00:00')
+                song_progress.slider('setValue', 0);
+            };
+        };
+        song_progress.slider('on', 'slideStart', function(result){
+            if(audio.currentSrc){
+                clearInterval(timer);
+            }
+        });
+        song_progress.slider('on', 'slideStop', function(result){
+            if(audio.currentSrc){
+                timer = setInterval(change_progress, 1000, result);
+            }
+        });
+        $('#s_song_name').keyup(function(event){
+            if(event.keyCode ==13){
+                if($(this).val()){
+                    $.get('/music/search/' + $(this).val(), function(song_results){
+                        $('#s_song_results').html(song_results);
+                        $('#s_song_results i.fa').click(function(){
+                            $('#s_song_results i.fa').css("color", "");
+                            $(this).css("color", "#c20c0c");
+                            var album_pic = $(this).attr('album-pic');
+                            var song_name = $(this).attr('song-name');
+                            var song_singer = $(this).attr('song-singer');
+                            var song_duration = $(this).attr('song-duration');
+                            $.get('/music/url/' + $(this).attr('song-id'), function(song_url){
+                                clearInterval(timer);
+                                $('#audio').attr('src', song_url);
+                                $('#album-pic').attr('src', album_pic)
+                                $('#song-name').text(song_name)
+                                $('#song-singer').text(song_singer)
+                                $('#song-duration').text(song_duration)
+                                $('#play-pause').attr('class', 'fa fa-pause-circle-o')
+                                audio.play()
+                                timer = setInterval(change_progress, 1000);
+                            });
+                        });
+                    });
+                };
+            };
         });
         $('#play-pause').click(function(){
             if(audio.currentSrc){
                 if($(this).attr('class') == 'fa fa-play-circle-o'){
-                    audio.play()
                     $(this).attr('class', 'fa fa-pause-circle-o')
+                    audio.play()
+                    timer = setInterval(change_progress, 1000);
                 }else if($(this).attr('class') == 'fa fa-pause-circle-o'){
-                    audio.pause()
                     $(this).attr('class', 'fa fa-play-circle-o')
+                    audio.pause()
+                    clearInterval(timer);
                 }
             }
-
         });
-        $('[data-toggle="popover"]').popover();
     });
+
+
+
+
+
+
+
+
 
 
 </script>

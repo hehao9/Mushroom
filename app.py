@@ -10,17 +10,21 @@ def hello_world():
     return render_template('index.html')
 
 
-@app.route('/music', methods=['POST', 'GET'])
+@app.route('/music')
 def music():
-    s_song = request.form['s_song'] if request.method == 'POST' else ''
+    return render_template('music.html')
+
+
+@app.route('/music/search/<song_name>')
+def music_search(song_name):
     results = [{
         'platform': '网易云音乐',
-        'song_list': search(s_song),
+        'song_list': search(song_name),
     }]
-    return render_template('music.html', results=results, s_song=s_song)
+    return render_template('song_list.html', results=results)
 
 
-@app.route('/music/<int:song_id>')
+@app.route('/music/url/<int:song_id>')
 def music_url(song_id):
     return get_song_url(song_id)
 
