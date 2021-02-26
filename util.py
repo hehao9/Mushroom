@@ -57,7 +57,7 @@ def search(song_name):
         resp_json = response.json()
         if resp_json.get('code') == 200:
             songs = resp_json.get('result').get('songs')
-            for song in songs:
+            for index, song in enumerate(songs, start=1):
                 millis = int(song.get('dt'))
                 seconds = int((millis / 1000) % 60)
                 seconds = f'0{seconds}' if seconds < 10 else seconds
@@ -65,6 +65,7 @@ def search(song_name):
                 minutes = f'0{minutes}' if minutes < 10 else minutes
                 duration = f'{minutes}:{seconds}'
                 song_list.append({
+                    'index': index,
                     'id': song.get('id'),
                     'name': song.get('name'),
                     'singer': song.get('ar')[0].get('name'),
