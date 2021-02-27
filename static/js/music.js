@@ -67,9 +67,7 @@ $(document).ready(function() {
             if ($(this).val()) {
                 $.get('/music/search/' + $(this).val(), function(song_results) {
                     $('#s_song_results').html(song_results);
-                    $('#s_song_results i.fa').click(function() {
-                        $('#s_song_results i.fa').css("color", "");
-                        $(this).css("color", "#c20c0c");
+                    $('.menu-song-play ').click(function() {
                         var album_pic = $(this).attr('album-pic');
                         var song_name = $(this).attr('song-name');
                         var song_singer = $(this).attr('song-singer');

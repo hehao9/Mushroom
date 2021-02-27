@@ -53,7 +53,10 @@ def search(song_name):
             'params': params,
             'encSecKey': enc_sec_key,
         }
-        response = requests.post(url, data=data)
+        headers = {
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36',
+        }
+        response = requests.post(url, data=data, headers=headers)
         resp_json = response.json()
         if resp_json.get('code') == 200:
             songs = resp_json.get('result').get('songs')

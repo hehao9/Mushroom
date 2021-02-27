@@ -74,7 +74,7 @@ input:focus {
     cursor: pointer;
     opacity: 1;
 }
-.table-play {
+.menu-song-play {
     width: 36px;
     height: 36px;
     background-position: -80px 0;
