@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_2393058_f6ia16qvjji.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -51,9 +52,9 @@
             <input id="song-progress-input" data-slider-id='song-progress'/>
         </div>
         <div class="ml-4 align-self-center">
-            <div class="song-voice"></div>
+            <i id="volume" class="iconfont icon-volume"></i>
         </div>
-        <div class="ml-2 align-self-center mr-5" style="width: 145px; padding-top: 4px;">
+        <div class="ml-2 align-self-center mr-5" style="width: 145px; margin-top: 3px;">
             <input id="volume-progress-input" data-slider-id='volume-progress'/>
         </div>
     </div>

@@ -14,17 +14,15 @@
         <tbody>
         {% for song in result.song_list %}
         <tr>
-            <td>
-                <div style="display: inline-block;">
-                    {{ song.index }}
-                    <div class="align-self-center">
-                        <div class="menu-song-play"
-                             song-id="{{ song.id }}"
-                             song-name="{{ song.name }}"
-                             song-singer="{{ song.singer }}"
-                             album-pic="{{ song.album_pic }}"
-                             song-duration="{{ song.duration }}"></div>
-                    </div>
+            <td class="p-0">
+                <div class="align-self-center">
+                {{ song.index }}
+                <i class="iconfont icon-play-cicle"
+                   song-id="{{ song.id }}"
+                   song-name="{{ song.name }}"
+                   song-singer="{{ song.singer }}"
+                   album-pic="{{ song.album_pic }}"
+                   song-duration="{{ song.duration }}"></i>
                 </div>
             </td>
             <td>{{ song.name }}</td>

@@ -51,7 +51,6 @@ input:focus {
 .song-pause {
     width: 21px;
     height: 29px;
-    background-position: 0 0;
     background-position: -30px 0;
     background-image: url(/static/img/player.png);
     opacity: .8;
@@ -63,21 +62,15 @@ input:focus {
     background-image: url(/static/img/player.png);
     opacity: .8;
 }
-.song-voice {
-    width: 26px;
-    height: 21px;
-    background-position: 0 -144px;
-    background-image: url(/static/img/player.png);
-    opacity: .8;
-}
-.song-prev:hover, .song-play:hover, .song-pause:hover, .song-next:hover, .song-voice:hover, .table-play:hover {
+.song-prev:hover, .song-play:hover, .song-pause:hover, .song-next:hover, .table-play:hover {
     cursor: pointer;
     opacity: 1;
 }
-.menu-song-play {
-    width: 36px;
-    height: 36px;
-    background-position: -80px 0;
-    background: url(/static/img/icon_list_menu.png);
-    opacity: .8;
+.icon-play-cicle:hover, .icon-volume:hover, .icon-volumeoff:hover {
+    color: #e8e8e8;
+}
+.icon-play-cicle, .icon-volume, .icon-volumeoff {
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
 }
