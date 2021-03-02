@@ -46,8 +46,8 @@ def search(song_name):
     song_list = []
     if song_name.strip():
         url = 'https://music.163.com/weapi/cloudsearch/get/web?csrf_token='
-        text = {"hlpretag": "<span class=\"s-fc7\">", "hlposttag": "</span>", "s": song_name, "type": "1", "offset": "0",
-                "total": "true", "limit": "30", "csrf_token": ""}
+        text = {"hlpretag": "<span class=\"s-fc7\">", "hlposttag": "</span>", "s": song_name, "type": "1",
+                "offset": "0", "total": "true", "limit": "30", "csrf_token": ""}
         params, enc_sec_key = sign(text)
         data = {
             'params': params,
@@ -60,7 +60,7 @@ def search(song_name):
         resp_json = response.json()
         if resp_json.get('code') == 200:
             songs = resp_json.get('result').get('songs')
-            for index, song in enumerate(songs, start=1):
+            for song in songs:
                 millis = int(song.get('dt'))
                 seconds = int((millis / 1000) % 60)
                 seconds = f'0{seconds}' if seconds < 10 else seconds
@@ -68,7 +68,6 @@ def search(song_name):
                 minutes = f'0{minutes}' if minutes < 10 else minutes
                 duration = f'{minutes}:{seconds}'
                 song_list.append({
-                    'index': index,
                     'id': song.get('id'),
                     'name': song.get('name'),
                     'singer': song.get('ar')[0].get('name'),

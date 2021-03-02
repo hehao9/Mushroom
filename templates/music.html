@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css">
-    <link rel="stylesheet" href="https://at.alicdn.com/t/font_2393058_f6ia16qvjji.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_2393058_2u862npqj2u.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -19,26 +19,27 @@
 <div class="container-fluid">
     <div class="bg-dark pt-2 pb-2 fixed-top"
          style="padding-right: 15px; padding-left: 15px; border-bottom: 5px solid #C20C0C; display: inline-flex;">
-        <div class="align-self-center" style="font-size: larger;">
-            <i class="fa fa-search" aria-hidden="true"></i></div>
+        <div class="align-self-center">
+            <i class="iconfont icon-search" style="color: #666; font-size: 24px;"></i></div>
         <input id="s_song_name" type="text" class="form-control bg-dark text-light border-0 w-100"
-               autocomplete="off" placeholder="搜索"/>
+               autocomplete="off" placeholder=""/>
     </div>
     <div id="s_song_results" class="row" style="margin-top: 70px; margin-bottom: 64px;"></div>
+    <div id="page-lyric"></div>
     <div class="pt-2 pb-2 fixed-bottom"
          style="padding-right: 15px; padding-left: 15px; background-color: #242424; display: inline-flex;">
         <audio id="audio" src=""></audio>
         <div class="ml-5 align-self-center">
-            <div class="song-prev"></div>
+            <i class="iconfont icon-prev"></i>
         </div>
         <div class="ml-4 align-self-center">
-            <div id="play-pause" class="song-play"></div>
+            <i id="play-pause" class="iconfont icon-play"></i>
         </div>
         <div class="ml-4 align-self-center">
-            <div class="song-next"></div>
+            <i class="iconfont icon-next"></i>
         </div>
         <div class="ml-5 align-self-center">
-            <img id="album-pic" src="{{ url_for('static', filename='img/favicon.ico') }}" width="46" height="46">
+            <img id="album-pic" src="{{ url_for('static', filename='img/record.png') }}" width="46" height="46">
         </div>
         <div class="ml-3 w-100">
             <div style="height: 24px;">
@@ -51,7 +52,10 @@
             </div>
             <input id="song-progress-input" data-slider-id='song-progress'/>
         </div>
-        <div class="ml-4 align-self-center">
+        <div class="ml-5 align-self-center">
+            <i class="iconfont icon-lyric" data-toggle="collapse" data-target="#page-lyric"></i>
+        </div>
+        <div class="ml-3 align-self-center">
             <i id="volume" class="iconfont icon-volume"></i>
         </div>
         <div class="ml-2 align-self-center mr-5" style="width: 145px; margin-top: 3px;">

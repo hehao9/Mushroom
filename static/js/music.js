@@ -27,7 +27,7 @@ $(document).ready(function() {
         }
         $('#song-currentTime').text(minutes + ':' + seconds);
         if (audio.ended) {
-            $('#play-pause').attr('class', 'song-play');
+            $('#play-pause').attr('class', 'iconfont icon-play');
             clearInterval(timer);
             $('#song-currentTime').text('00:00');
             song_progress.slider('setValue', 0);
@@ -77,7 +77,7 @@ $(document).ready(function() {
                         $.get('/music/url/' + $(this).attr('song-id'), function(song_url) {
                             clearInterval(timer);
                             $('#audio').attr('src', song_url);
-                            $('#play-pause').attr('class', 'song-pause');
+                            $('#play-pause').attr('class', 'iconfont icon-pause');
                             audio.play();
                             timer = setInterval(change_progress, fq);
                         });
@@ -89,11 +89,11 @@ $(document).ready(function() {
     $('#play-pause').click(function() {
         if (audio.currentSrc) {
             if (audio.paused) {
-                $(this).attr('class', 'song-pause');
+                $(this).attr('class', 'iconfont icon-pause');
                 audio.play();
                 timer = setInterval(change_progress, fq);
             } else {
-                $(this).attr('class', 'song-play');
+                $(this).attr('class', 'iconfont icon-play');
                 audio.pause();
                 clearInterval(timer);
             }
