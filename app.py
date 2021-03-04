@@ -1,6 +1,6 @@
-from flask import Flask, request
+from flask import Flask, jsonify
 from flask import render_template
-from util import search, get_song_url
+from util import search, get_song_url, get_song_lyric
 
 app = Flask(__name__)
 
@@ -27,6 +27,11 @@ def music_search(song_name):
 @app.route('/music/url/<int:song_id>')
 def music_url(song_id):
     return get_song_url(song_id)
+
+
+@app.route('/music/lyric/<int:song_id>')
+def music_lyric(song_id):
+    return jsonify(get_song_lyric(song_id))
 
 
 if __name__ == '__main__':

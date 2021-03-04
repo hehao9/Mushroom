@@ -42,22 +42,26 @@ def sign(text):
     return enc_text, enc_sec_key
 
 
+def request_url(url, text):
+    params, enc_sec_key = sign(text)
+    data = {
+        'params': params,
+        'encSecKey': enc_sec_key,
+    }
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36',
+    }
+    response = requests.post(url, data=data, headers=headers)
+    return response.json()
+
+
 def search(song_name):
     song_list = []
     if song_name.strip():
         url = 'https://music.163.com/weapi/cloudsearch/get/web?csrf_token='
         text = {"hlpretag": "<span class=\"s-fc7\">", "hlposttag": "</span>", "s": song_name, "type": "1",
                 "offset": "0", "total": "true", "limit": "30", "csrf_token": ""}
-        params, enc_sec_key = sign(text)
-        data = {
-            'params': params,
-            'encSecKey': enc_sec_key,
-        }
-        headers = {
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36',
-        }
-        response = requests.post(url, data=data, headers=headers)
-        resp_json = response.json()
+        resp_json = request_url(url, text)
         if resp_json.get('code') == 200:
             songs = resp_json.get('result').get('songs')
             for song in songs:
@@ -81,19 +85,31 @@ def search(song_name):
 def get_song_url(song_id):
     url = 'https://music.163.com/weapi/song/enhance/player/url/v1?csrf_token='
     text = {"ids": [song_id], "level": "standard", "encodeType": "aac", "csrf_token": ""}
-    params, enc_sec_key = sign(text)
-    data = {
-        'params': params,
-        'encSecKey': enc_sec_key,
-    }
-    response = requests.post(url, data=data)
-    resp_json = response.json()
+    resp_json = request_url(url, text)
     song_url = ''
     if resp_json.get('code') == 200:
         song_url = resp_json.get('data')[0].get('url')
     return song_url
 
 
+def get_song_lyric(song_id):
+    url = 'https://music.163.com/weapi/song/lyric?csrf_token='
+    text = {"id": song_id, "lv": -1, "tv": -1, "csrf_token": ""}
+    resp_json = request_url(url, text)
+    song_lyric = []
+    if resp_json.get('code') == 200:
+        lyric = resp_json.get('lrc').get('lyric')
+        line_lyrics = lyric.split('\n')
+        for line_lyric in line_lyrics:
+            if line_lyric != '' and line_lyric.split(']')[1] != '':
+                time_str = line_lyric.split(']')[0].split('[')[1]
+                song_lyric.append({
+                    't': int(time_str.split(':')[0]) * 60 + float(time_str.split(':')[1]),
+                    'c': line_lyric.split(']')[1],
+                })
+    return song_lyric
+
+
 if __name__ == '__main__':
     # print(search('寂寞沙洲冷'))
-    print(get_song_url(1822207727))
+    print(get_song_lyric(1822207727))

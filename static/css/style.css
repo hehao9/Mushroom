@@ -18,7 +18,7 @@ input:focus {
     background: #C20C0C;
 }
 #song-progress .slider-track-high, #volume-progress .slider-track-high {
-    background: #666;
+    background: #989898;
 }
 #song-progress .slider-handle {
     margin-left: -4px;
@@ -34,17 +34,39 @@ input:focus {
     height: 6px;
     background: #C20C0C;
 }
-.icon-play-cicle:hover, .icon-volume:hover, .icon-volumeoff:hover, .icon-lyric:hover, .icon-prev:hover,
-.icon-play:hover, .icon-pause:hover, .icon-next:hover {
+.icon-play-cicle:hover, .icon-volume-0:hover, .icon-volume-1:hover, .icon-volume-2:hover,
+.icon-volume-3:hover, .icon-lyric:hover, .icon-prev:hover, .icon-play:hover, .icon-pause:hover, .icon-next:hover {
     color: #e8e8e8;
 }
-.icon-play-cicle, .icon-volume, .icon-volumeoff, .icon-lyric, .icon-prev, .icon-next {
+.icon-play-cicle, .icon-volume-0, .icon-volume-1, .icon-volume-2, .icon-volume-3, .icon-lyric,
+.icon-prev, .icon-next {
     font-size: 24px;
-    color: #666;
+    color: #989898;
+    cursor: pointer;
+}
+.icon-volume-0, .icon-volume-1, .icon-volume-2, .icon-volume-3 {
+    font-size: 30px;
+    color: #989898;
     cursor: pointer;
 }
 .icon-play, .icon-pause {
     font-size: 32px;
-    color: #666;
+    color: #989898;
     cursor: pointer;
+}
+#s_song_results {
+    position: fixed;
+    top: 59px;
+    left: 0;
+    bottom: 64px;
+    right: 0;
+    overflow: auto;
+}
+#page-lyric {
+    position: fixed;
+    top: 59px;
+    left: 0;
+    bottom: 64px;
+    right: 0;
+    color: #989898;
 }
