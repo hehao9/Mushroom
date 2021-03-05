@@ -4,7 +4,9 @@ $(document).ready(function() {
     var fq = song_progress_step * 1000;
     $('#s_song_name').focus();
     var current_song_id = 0;
+    var current_song_lyric = '';
     var audio = document.getElementById('audio');
+    auto_scroll_lyric = true;
     audio.volume = 0.5;
     var song_progress = $('#song-progress-input').slider({
         step: song_progress_step,
@@ -32,6 +34,7 @@ $(document).ready(function() {
             clearInterval(timer);
             $('#song-currentTime').text('00:00');
             song_progress.slider('setValue', 0);
+            audio.currentTime = 0;
         };
     };
     song_progress.slider('on', 'slide', function(result) {
@@ -46,6 +49,19 @@ $(document).ready(function() {
                 minutes = '0' + minutes;
             }
             $('#song-currentTime').text(minutes + ':' + seconds);
+
+            $("#page-lyric").css('top', '59px');
+            var page_lyric_visible_height = $("#page-lyric").height();
+            $("#page-lyric > div").each(function(i, e){
+                if (result >= $(this).attr('t')) {
+                    var scroll_height = i * 32 + 16 - parseInt(page_lyric_visible_height / 2)
+                    if (scroll_height > 0) {
+                        $("#page-lyric").css('top', 59 - scroll_height + 'px');
+                    }
+                    $(this).css('color', '#e8e8e8');
+                    $(this).siblings().css('color', '');
+                }
+            });
         }
     });
     song_progress.slider('on', 'slideStart', function(result) {
@@ -53,6 +69,7 @@ $(document).ready(function() {
             if (!audio.paused) {
                 clearInterval(timer);
             }
+            auto_scroll_lyric = false;
         }
     });
     song_progress.slider('on', 'slideStop', function(result) {
@@ -61,6 +78,7 @@ $(document).ready(function() {
             if (!audio.paused) {
                 timer = setInterval(change_progress, fq);
             }
+            auto_scroll_lyric = true;
         }
     });
     $('#s_song_name').keyup(function(event) {
@@ -76,6 +94,7 @@ $(document).ready(function() {
                         $('#song-singer').text($(this).attr('song-singer'));
                         $('#song-duration').text($(this).attr('song-duration'));
                         current_song_id = $(this).attr('song-id');
+                        current_song_lyric = '';
                         $.get('/music/url/' + current_song_id, function(song_url) {
                             clearInterval(timer);
                             $('#audio').attr('src', song_url);
@@ -154,13 +173,14 @@ $(document).ready(function() {
     });
     $('#lyric').click(function() {
         if (current_song_id != 0) {
-            if ($('#s_song_results').attr('style') != 'display: none;') {
+            if (current_song_lyric == '') {
                 $.get('/music/lyric/' + current_song_id, function(song_lyric) {
                     var html = "";
                     $.each(song_lyric, function(i, v) {
                         html += '<div class="p-1 text-center" t=' + v.t + '>' + v.c + '</div>';
                     });
                     $('#page-lyric').html(html);
+                    current_song_lyric = html;
                 });
             }
             $('#s_song_results').slideToggle("slow");
@@ -168,18 +188,19 @@ $(document).ready(function() {
         }
     });
     audio.ontimeupdate = function() {
-        $("#page-lyric").css('top', '59px');
-        var page_lyric_height = $("#page-lyric").height();
-        $("#page-lyric > div").each(function(i, e){
-            if (audio.currentTime >= $(this).attr('t')) {
-                console.log((i + 1) * 32);
-                console.log(page_lyric_height / 2);
-                if (((i + 1) * 32) > (page_lyric_height / 2)) {
-                    $("#page-lyric").css('top', $("#page-lyric").css('top').split('px')[0] - 32 + 'px');
+        if (auto_scroll_lyric) {
+            $("#page-lyric").css('top', '59px');
+            var page_lyric_visible_height = $("#page-lyric").height();
+            $("#page-lyric > div").each(function(i, e){
+                if (audio.currentTime >= $(this).attr('t')) {
+                    var scroll_lyric_height = i * 32 + 16 - parseInt(page_lyric_visible_height / 2)
+                    if (scroll_lyric_height > 0) {
+                        $("#page-lyric").css('top', 59 - scroll_lyric_height + 'px');
+                    }
+                    $(this).css('color', '#e8e8e8');
+                    $(this).siblings().css('color', '');
                 }
-                $(this).css('color', '#e8e8e8');
-                $(this).siblings().css('color', '');
-            }
-        });
+            });
+        }
     };
 });

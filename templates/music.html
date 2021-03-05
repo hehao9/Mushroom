@@ -17,51 +17,89 @@
 </head>
 <body class="bg-dark">
 <div class="container-fluid">
-    <div class="bg-dark pt-2 pb-2 fixed-top"
-         style="padding-right: 15px; padding-left: 15px; border-bottom: 5px solid #C20C0C; display: inline-flex;">
+    <div class="d-flex bg-dark p-2 fixed-top" style="border-bottom: 5px solid #C20C0C;">
         <div class="align-self-center">
             <i class="iconfont icon-search" style="color: #989898; font-size: 24px;"></i></div>
-        <input id="s_song_name" type="text" class="form-control bg-dark text-light border-0 w-100"
+        <input id="s_song_name" type="text" class="form-control bg-dark text-light border-0 flex-grow-1"
                autocomplete="off" placeholder=""/>
     </div>
     <div id="s_song_results"></div>
     <div id="page-lyric" style="display: none;"></div>
-    <div class="pt-2 pb-2 fixed-bottom"
-         style="padding-right: 15px; padding-left: 15px; background-color: #242424; display: inline-flex;">
-        <audio id="audio" src=""></audio>
-        <div class="ml-5 align-self-center">
-            <i class="iconfont icon-prev"></i>
-        </div>
-        <div class="ml-4 align-self-center">
-            <i id="play-pause" class="iconfont icon-play"></i>
-        </div>
-        <div class="ml-4 align-self-center">
-            <i class="iconfont icon-next"></i>
-        </div>
-        <div class="ml-5 align-self-center">
+    <div class="d-flex p-2 fixed-bottom" style="background-color: #242424;">
+        <div class="align-self-center">
             <img id="album-pic" src="{{ url_for('static', filename='img/record.png') }}" width="46" height="46">
         </div>
-        <div class="ml-3 w-100">
-            <div style="height: 24px;">
-                <span id="song-name" style="color: #e8e8e8"></span>
-                <span id="song-singer" class="ml-2" style="color: #9b9b9b;"></span>
-                <div class="float-right" style="color: #797979;">
-                    <span id="song-currentTime" style="color: #a1a1a1;">00:00</span> /
-                    <span id="song-duration">00:00</span>
+        <div class="d-flex flex-column flex-grow-1">
+            <audio id="audio" src=""></audio>
+            <div class="ml-3 mr-3">
+                    <div style="height: 24px;">
+                        <span id="song-name" style="color: #e8e8e8"></span>
+                        <span id="song-singer" class="ml-2" style="color: #9b9b9b;"></span>
+                        <div class="float-right" style="color: #797979;">
+                            <span id="song-currentTime" style="color: #a1a1a1;">00:00</span> /
+                            <span id="song-duration">00:00</span>
+                        </div>
+                    </div>
+                    <input id="song-progress-input" data-slider-id='song-progress'/>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="align-self-center">
+                    <i class="iconfont icon-prev"></i>
+                </div>
+                <div class="ml-4 align-self-center">
+                    <i id="play-pause" class="iconfont icon-play"></i>
+                </div>
+                <div class="ml-4 align-self-center">
+                    <i class="iconfont icon-next"></i>
+                </div>
+                <div class="ml-4 align-self-center">
+                    <i id="lyric" class="iconfont icon-lyric"></i>
+                </div>
+                <div class="ml-3 align-self-center">
+                    <i id="volume" class="iconfont icon-volume-2"></i>
+                </div>
+                <div class="ml-2 align-self-center" style="width: 100px; margin-top: 3px;">
+                    <input id="volume-progress-input" data-slider-id='volume-progress'/>
                 </div>
             </div>
-            <input id="song-progress-input" data-slider-id='song-progress'/>
-        </div>
-        <div class="ml-5 align-self-center">
-            <i id="lyric" class="iconfont icon-lyric"></i>
-        </div>
-        <div class="ml-3 align-self-center">
-            <i id="volume" class="iconfont icon-volume-2"></i>
-        </div>
-        <div class="ml-2 align-self-center mr-5" style="width: 145px; margin-top: 3px;">
-            <input id="volume-progress-input" data-slider-id='volume-progress'/>
         </div>
     </div>
+<!--    <div class="pt-2 pb-2 fixed-bottom"-->
+<!--         style="padding-right: 15px; padding-left: 15px; background-color: #242424; display: inline-flex;">-->
+<!--        <audio id="audio" src=""></audio>-->
+<!--        <div class="ml-5 align-self-center">-->
+<!--            <i class="iconfont icon-prev"></i>-->
+<!--        </div>-->
+<!--        <div class="ml-4 align-self-center">-->
+<!--            <i id="play-pause" class="iconfont icon-play"></i>-->
+<!--        </div>-->
+<!--        <div class="ml-4 align-self-center">-->
+<!--            <i class="iconfont icon-next"></i>-->
+<!--        </div>-->
+<!--        <div class="ml-5 align-self-center">-->
+<!--            <img id="album-pic" src="{{ url_for('static', filename='img/record.png') }}" width="46" height="46">-->
+<!--        </div>-->
+<!--        <div class="ml-3 w-100">-->
+<!--            <div style="height: 24px;">-->
+<!--                <span id="song-name" style="color: #e8e8e8"></span>-->
+<!--                <span id="song-singer" class="ml-2" style="color: #9b9b9b;"></span>-->
+<!--                <div class="float-right" style="color: #797979;">-->
+<!--                    <span id="song-currentTime" style="color: #a1a1a1;">00:00</span> /-->
+<!--                    <span id="song-duration">00:00</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <input id="song-progress-input" data-slider-id='song-progress'/>-->
+<!--        </div>-->
+<!--        <div class="ml-5 align-self-center">-->
+<!--            <i id="lyric" class="iconfont icon-lyric"></i>-->
+<!--        </div>-->
+<!--        <div class="ml-3 align-self-center">-->
+<!--            <i id="volume" class="iconfont icon-volume-2"></i>-->
+<!--        </div>-->
+<!--        <div class="ml-2 align-self-center mr-5" style="width: 145px; margin-top: 3px;">-->
+<!--            <input id="volume-progress-input" data-slider-id='volume-progress'/>-->
+<!--        </div>-->
+<!--    </div>-->
 </div>
 </body>
 </html>
