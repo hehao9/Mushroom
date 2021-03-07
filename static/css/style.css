@@ -1,7 +1,3 @@
-body {
-    font-size: 14px;
-    line-height: 1.2;
-}
 input:focus {
     box-shadow: none!important;
 }
@@ -10,13 +6,12 @@ input:focus {
 }
 #song-progress, #volume-progress {
     width: 100%;
-    height: 18px;
-}
-#song-progress .slider-track {
-    height: 3px;
-}
-#volume-progress .slider-track {
     height: 2px;
+}
+#song-progress .slider-track, #volume-progress .slider-track {
+    height: 2px;
+    margin-top: 0px;
+    top: 0;
 }
 #song-progress .slider-selection, #volume-progress .slider-selection {
     background: #C20C0C;
@@ -24,16 +19,9 @@ input:focus {
 #song-progress .slider-track-high, #volume-progress .slider-track-high {
     background: #989898;
 }
-#song-progress .slider-handle {
-    margin-left: -4px;
-    margin-top: 2px;
-    width: 7px;
-    height: 7px;
-    background: #C20C0C;
-}
-#volume-progress .slider-handle {
+#song-progress .slider-handle, #volume-progress .slider-handle {
     margin-left: -3px;
-    margin-top: 2px;
+    margin-top: -2px;
     width: 6px;
     height: 6px;
     background: #C20C0C;
