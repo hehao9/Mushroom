@@ -1,44 +1,20 @@
 $(document).ready(function() {
-    var timer = 0;
-    var song_progress_step = 0.01;
-    var fq = song_progress_step * 1000;
     $('#s_song_name').focus();
     var current_song_id = 0;
     var current_song_lyric = '';
     var audio = document.getElementById('audio');
-    auto_scroll_lyric = true;
     audio.volume = 0.5;
+    var song_progress_on_slide = false;
     var song_progress = $('#song-progress-input').slider({
-        step: song_progress_step,
+        step: 0.2,
         min: 0,
         max: 0,
         value: 0,
         tooltip: 'hide'
     });
-    var change_progress = function() {
-        var total_millis = parseInt(audio.duration);
-        song_progress.slider('setAttribute', 'max', total_millis);
-        var millis = parseInt(audio.currentTime);
-        song_progress.slider('setValue', audio.currentTime);
-        var seconds = millis % 60;
-        if (seconds < 10) {
-            seconds = '0' + seconds;
-        }
-        var minutes = parseInt(millis / 60);
-        if (minutes < 10) {
-            minutes = '0' + minutes;
-        }
-        $('#song-currentTime').text(minutes + ':' + seconds);
-        if (audio.ended) {
-            $('#play-pause').attr('class', 'iconfont icon-play');
-            clearInterval(timer);
-            $('#song-currentTime').text('00:00');
-            song_progress.slider('setValue', 0);
-            audio.currentTime = 0;
-        };
-    };
     song_progress.slider('on', 'slide', function(result) {
         if (audio.currentSrc) {
+            // 设置当前播放时间显示
             var millis = parseInt(result);
             var seconds = millis % 60;
             if (seconds < 10) {
@@ -50,6 +26,7 @@ $(document).ready(function() {
             }
             $('#song-currentTime').text(minutes + ':' + seconds);
 
+            // 设置歌词进度
             $("#page-lyric").css('top', '59px');
             var page_lyric_visible_height = $("#page-lyric").height();
             $("#page-lyric > div").each(function(i, e){
@@ -66,19 +43,16 @@ $(document).ready(function() {
     });
     song_progress.slider('on', 'slideStart', function(result) {
         if (audio.currentSrc) {
-            if (!audio.paused) {
-                clearInterval(timer);
-            }
-            auto_scroll_lyric = false;
+            song_progress_on_slide = true;
         }
     });
     song_progress.slider('on', 'slideStop', function(result) {
         if (audio.currentSrc) {
             audio.currentTime = result;
-            if (!audio.paused) {
-                timer = setInterval(change_progress, fq);
+            if ($('#play-pause').attr('class') == 'iconfont icon-pause'){
+                audio.play();
             }
-            auto_scroll_lyric = true;
+            song_progress_on_slide = false;
         }
     });
     $('#s_song_name').keyup(function(event) {
@@ -88,7 +62,7 @@ $(document).ready(function() {
                     $('#s_song_results').html(song_results);
                     $('.icon-play-cicle').click(function() {
                         $('.icon-play-cicle').css('color', '');
-                        $(this).css('color', '#C20C0C');
+                        $(this).css('color', '#28a745');
                         $('#album-pic').attr('src', $(this).attr('album-pic'));
                         $('#song-name').text($(this).attr('song-name'));
                         $('#song-singer').text($(this).attr('song-singer'));
@@ -96,11 +70,9 @@ $(document).ready(function() {
                         current_song_id = $(this).attr('song-id');
                         current_song_lyric = '';
                         $.get('/music/url/' + current_song_id, function(song_url) {
-                            clearInterval(timer);
                             $('#audio').attr('src', song_url);
                             $('#play-pause').attr('class', 'iconfont icon-pause');
                             audio.play();
-                            timer = setInterval(change_progress, fq);
                         });
                     });
                 });
@@ -112,21 +84,22 @@ $(document).ready(function() {
             if (audio.paused) {
                 $(this).attr('class', 'iconfont icon-pause');
                 audio.play();
-                timer = setInterval(change_progress, fq);
             } else {
                 $(this).attr('class', 'iconfont icon-play');
                 audio.pause();
-                clearInterval(timer);
             }
         }
     });
+    $('#volume').popover();
     var voice_mute_before = 0.5;
     var volume_progress = $('#volume-progress-input').slider({
         step: 1,
         min: 0,
         max: 100,
         value: voice_mute_before * 100,
-        tooltip: 'show'
+        tooltip: 'show',
+        orientation: 'vertical',
+        reversed: true
     });
     $('#volume').click(function() {
         if (audio.volume > 0) {
@@ -188,7 +161,28 @@ $(document).ready(function() {
         }
     });
     audio.ontimeupdate = function() {
-        if (auto_scroll_lyric) {
+        if (!song_progress_on_slide) {
+            // 设置跟随播放进度条
+            if (audio.ended) {
+                $('#play-pause').attr('class', 'iconfont icon-play');
+                audio.currentTime = 0;
+            };
+            song_progress.slider('setAttribute', 'max', parseInt(audio.duration));
+            song_progress.slider('setValue', audio.currentTime);
+
+            // 设置当前播放时间显示
+            var millis = parseInt(audio.currentTime);
+            var seconds = millis % 60;
+            if (seconds < 10) {
+                seconds = '0' + seconds;
+            }
+            var minutes = parseInt(millis / 60)
+            if (minutes < 10) {
+                minutes = '0' + minutes;
+            }
+            $('#song-currentTime').text(minutes + ':' + seconds);
+
+            // 设置歌词进度
             $("#page-lyric").css('top', '59px');
             var page_lyric_visible_height = $("#page-lyric").height();
             $("#page-lyric > div").each(function(i, e){

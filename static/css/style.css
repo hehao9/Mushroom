@@ -4,27 +4,43 @@ input:focus {
 .bg-dark, .table-dark, .btn-dark {
     background-color: #141414!important;
 }
-#song-progress, #volume-progress {
+#song-progress {
     width: 100%;
     height: 2px;
+    display: block;
 }
-#song-progress .slider-track, #volume-progress .slider-track {
+#volume-progress {
+    width: 2px;
+    height: 100px;
+}
+#song-progress .slider-track {
     height: 2px;
     margin-top: 0px;
     top: 0;
 }
-#song-progress .slider-selection, #volume-progress .slider-selection {
-    background: #C20C0C;
+#volume-progress .slider-track {
+    width: 100%;
+    height: 100%;
 }
-#song-progress .slider-track-high, #volume-progress .slider-track-high {
+#song-progress .slider-selection, #volume-progress .slider-track-high {
+    background: #28a745;
+}
+#song-progress .slider-track-high, #volume-progress .slider-selection {
     background: #989898;
 }
-#song-progress .slider-handle, #volume-progress .slider-handle {
+#song-progress .slider-handle {
     margin-left: -3px;
     margin-top: -2px;
     width: 6px;
     height: 6px;
-    background: #C20C0C;
+    background: #28a745;
+}
+#volume-progress .slider-handle {
+    margin-left: -1px;
+    margin-top: -3px;
+    width: 6px;
+    height: 6px;
+    background: #28a745;
 }
 .icon-play-cicle:hover, .icon-volume-0:hover, .icon-volume-1:hover, .icon-volume-2:hover,
 .icon-volume-3:hover, .icon-lyric:hover, .icon-prev:hover, .icon-play:hover, .icon-pause:hover, .icon-next:hover {
