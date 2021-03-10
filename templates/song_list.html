@@ -1,7 +1,7 @@
 {% for result in results %}
 <div class="col">
     <h5 class="text-light">{{ result.platform }}</h5>
-    <table class="table table-sm song_table">
+    <table class="song_table">
         <thead>
         <tr>
             <th></th>
@@ -14,15 +14,13 @@
         <tbody>
         {% for song in result.song_list %}
         <tr>
-            <td class="p-0">
-                <div class="align-self-center">
-                <i class="iconfont icon-play-cicle"
+            <td class="p-0" style="font-size: 19px;">
+                <i class="iconfont icon-play-cicle" style="font-size: 19px;"
                    song-id="{{ song.id }}"
                    song-name="{{ song.name }}"
                    song-singer="{{ song.singer }}"
                    album-pic="{{ song.album_pic }}"
                    song-duration="{{ song.duration }}"></i>
-                </div>
             </td>
             <td>{{ song.name }}</td>
             <td>{{ song.singer }}</td>

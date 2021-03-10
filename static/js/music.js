@@ -95,7 +95,7 @@ $(document).ready(function() {
         step: 1,
         min: 0,
         max: 100,
-        value: 50,
+        value: 60,
         tooltip: 'show',
         orientation: 'vertical',
         reversed: true
@@ -104,24 +104,20 @@ $(document).ready(function() {
         audio.volume = result / 100;
         if (audio.volume == 0) {
             $('#volume').attr('class', 'iconfont icon-volume-0');
-        } else if (audio.volume <= 0.33) {
+        } else if (audio.volume < 0.5) {
             $('#volume').attr('class', 'iconfont icon-volume-1');
-        } else if (audio.volume <= 0.66) {
-            $('#volume').attr('class', 'iconfont icon-volume-2');
         } else {
-            $('#volume').attr('class', 'iconfont icon-volume-3');
+            $('#volume').attr('class', 'iconfont icon-volume-2');
         }
     });
     volume_progress.slider('on', 'slideStop', function(result) {
         audio.volume = result / 100;
         if (audio.volume == 0) {
             $('#volume').attr('class', 'iconfont icon-volume-0');
-        } else if (audio.volume <= 0.33) {
+        } else if (audio.volume < 0.5) {
             $('#volume').attr('class', 'iconfont icon-volume-1');
-        } else if (audio.volume <= 0.66) {
-            $('#volume').attr('class', 'iconfont icon-volume-2');
         } else {
-            $('#volume').attr('class', 'iconfont icon-volume-3');
+            $('#volume').attr('class', 'iconfont icon-volume-2');
         }
     });
     $('#volume').click(function() {
@@ -129,12 +125,17 @@ $(document).ready(function() {
     });
     $('#lyric').click(function() {
         if ($('#page-lyric').css('display') == 'none') {
-            $(this).css('color', '#28a745');
-        } else {
-            $(this).css('color', '');
+            $('#cur_title_line').hide();
         }
-        $('#search_list').slideToggle();
-        $('#page-lyric').slideToggle();
+        $('#search_list').slideToggle('fast');
+        $('#page-lyric').slideToggle('fast', function() {
+            if ($('#page-lyric').css('display') == 'block') {
+                $('#lyric').css('color', '#28a745');
+            } else {
+                $('#lyric').css('color', '');
+                $('#cur_title_line').show();
+            }
+        });
     });
     audio.ontimeupdate = function() {
         if (!song_progress_on_slide) {
@@ -173,4 +174,7 @@ $(document).ready(function() {
             });
         }
     };
+    $('#play-rule').click(function() {
+
+    });
 });

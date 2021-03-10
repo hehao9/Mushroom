@@ -1,4 +1,8 @@
-input:focus {
+body {
+    font-size: 14px!important;
+}
+input#s_song_name:focus {
+    outline: 0;
     box-shadow: none!important;
 }
 #song-progress {
@@ -10,8 +14,8 @@ input:focus {
     width: 2px;
     height: 100px;
     position: absolute;
-    top: -100px;
-    left: 50%;
+    top: -105px;
+    left: 20%;
     display: none;
 }
 #song-progress .slider-track {
@@ -37,24 +41,29 @@ input:focus {
     background: #28a745;
 }
 #volume-progress .slider-handle {
-    margin-left: -1px;
+    display: none;
+    margin-left: -2px;
     margin-top: -3px;
     width: 6px;
     height: 6px;
     background: #28a745;
 }
 .icon-play-cicle:hover, .icon-volume-0:hover, .icon-volume-1:hover, .icon-volume-2:hover,
-.icon-volume-3:hover, .icon-lyric:hover, .icon-prev:hover, .icon-play:hover, .icon-pause:hover, .icon-next:hover {
+.icon-lyric:hover, .icon-prev:hover, .icon-play:hover, .icon-pause:hover, .icon-next:hover,
+.icon-order-play:hover, .icon-random-play:hover, .icon-single-loop:hover, .icon-list-loop:hover {
     color: #e8e8e8;
 }
-.icon-play-cicle, .icon-volume-0, .icon-volume-1, .icon-volume-2, .icon-volume-3, .icon-lyric,
-.icon-prev, .icon-next {
+.icon-play-cicle {
+    color: #989898;
+    cursor: pointer;
+}
+.icon-lyric, .icon-prev, .icon-next, .icon-order-play, .icon-random-play, .icon-single-loop, .icon-list-loop {
     font-size: 24px;
     color: #989898;
     cursor: pointer;
 }
-.icon-volume-0, .icon-volume-1, .icon-volume-2, .icon-volume-3 {
-    font-size: 30px;
+.icon-volume-0, .icon-volume-1, .icon-volume-2 {
+    font-size: 12px;
     color: #989898;
     cursor: pointer;
 }
@@ -64,23 +73,29 @@ input:focus {
     cursor: pointer;
 }
 #s_song_name{
-    background-color: #141414!important;
+    color: #e8e8e8;
+    background-color: #1b1b1c;
 }
 #search_list{
     overflow: auto;
-    background-color: #141414;
+    background-color: #1b1b1c;
 }
 #s_song_results {
     overflow: auto;
-    background-color: #141414;
+    background-color: #1b1b1c;
 }
 .song_table {
     color: #e8e8e8;
-    background-color: #141414;
+    background-color: #1b1b1c;
+    width: 100%;
+}
+.song_table td, .song_table th {
+    padding: .25rem;
+    vertical-align: middle;
+    border-top: 1px solid #242424;
 }
 .song_table tbody tr:hover {
-    color: #fff;
-    background-color: rgba(255,255,255,.075);
+    background-color: #242424;
 }
 #page-lyric {
     display: none;
