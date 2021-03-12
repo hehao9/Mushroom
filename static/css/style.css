@@ -110,5 +110,6 @@ input#s_song_name:focus {
     background-color: #242424;
 }
 #lyric_result {
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 30px;
 }

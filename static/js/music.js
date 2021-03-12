@@ -37,16 +37,24 @@ $(document).ready(function() {
             $('#song-currentTime').text(minutes + ':' + seconds);
 
             // 设置歌词进度
-            $("#page-lyric").css('top', '59px');
-            var page_lyric_visible_height = $("#page-lyric").height();
-            $("#page-lyric > div").each(function(i, e){
+            var half_lrc_screen_height = parseInt($("#lyric_result").height() / 2);
+            $("#lyric_result > div").each(function(i, e){
                 if (result >= $(this).attr('t')) {
-                    var scroll_height = i * 32 + 16 - parseInt(page_lyric_visible_height / 2)
-                    if (scroll_height > 0) {
-                        $("#page-lyric").css('top', 59 - scroll_height + 'px');
+                    var left_scroll_lyric_height = ($("#lyric_result > div").length - i) * 30 + 15 - half_lrc_screen_height;
+                    if (left_scroll_lyric_height > 0) {
+                        var scroll_lyric_height = i * 30 + 15 - half_lrc_screen_height;
+                        if (scroll_lyric_height > 0) {
+                            if (left_scroll_lyric_height < 30) {
+                                scroll_lyric_height = scroll_lyric_height - 30 + left_scroll_lyric_height;
+                            }
+                            if (scroll_lyric_height % 2 == 1) {
+                                scroll_lyric_height = scroll_lyric_height - 1;
+                            }
+                            $("#lyric_result").getNiceScroll(0).doScrollTop(scroll_lyric_height);
+                        }
                     }
-                    $(this).css('color', '#e8e8e8');
-                    $(this).siblings().css('color', '');
+                    $(this).css({'font-size': '15px', 'color': '#e8e8e8'});
+                    $(this).siblings().attr('style', '');
                 }
             });
         }
@@ -81,7 +89,7 @@ $(document).ready(function() {
                         $.get('/music/play/detail/' + $(this).attr('song-id'), function(song_detail) {
                             var html = "";
                             $.each(song_detail['lyric'], function(i, v) {
-                                html += '<div class="p-1 text-center" t=' + v.t + '>' + v.c + '</div>';
+                                html += '<div class="text-center" t=' + v.t + '>' + v.c + '</div>';
                             });
                             $('#lyric_result').html(html);
                             $('#audio').attr('src', song_detail['url']);
@@ -175,14 +183,22 @@ $(document).ready(function() {
             $('#song-currentTime').text(minutes + ':' + seconds);
 
             // 设置歌词进度
-//            var page_lyric_visible_height = $("#lyric_result").height();
+            var half_lrc_screen_height = parseInt($("#lyric_result").height() / 2);
             $("#lyric_result > div").each(function(i, e){
                 if (audio.currentTime >= $(this).attr('t')) {
-//                    var scroll_lyric_height = i * 32 + 16 - parseInt(page_lyric_visible_height / 2)
-//                    if (scroll_lyric_height > 0) {
-//                        $("#page-lyric").css('top', 59 - scroll_lyric_height + 'px');
-//                    }
-                    $("#lyric_result").getNiceScroll(0).doScrollTop(i * 27.33);
+                    var left_scroll_lyric_height = ($("#lyric_result > div").length - i) * 30 + 15 - half_lrc_screen_height;
+                    if (left_scroll_lyric_height > 0) {
+                        var scroll_lyric_height = i * 30 + 15 - half_lrc_screen_height;
+                        if (scroll_lyric_height > 0) {
+                            if (left_scroll_lyric_height < 30) {
+                                scroll_lyric_height = scroll_lyric_height - 30 + left_scroll_lyric_height;
+                            }
+                            if (scroll_lyric_height % 2 == 1) {
+                                scroll_lyric_height = scroll_lyric_height - 1;
+                            }
+                            $("#lyric_result").getNiceScroll(0).doScrollTop(scroll_lyric_height);
+                        }
+                    }
                     $(this).css({'font-size': '15px', 'color': '#e8e8e8'});
                     $(this).siblings().attr('style', '');
                 }
