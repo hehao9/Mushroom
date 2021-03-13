@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#s_song_results').niceScroll({
+    $('.list_one').niceScroll({
         cursorcolor: "#444",
         cursorwidth: 4,
         cursorborder: 0,
