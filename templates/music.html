@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css">
-    <link rel="stylesheet" href="https://at.alicdn.com/t/font_2393058_87mrqbdingr.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_2393058_qnj8qje870h.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
@@ -56,8 +56,12 @@
                 </div>
                 <div id="song-duration" class="ml-2" style="color: #797979; font-size: 12px;">00:00</div>
                 <div class="ml-2 align-self-center" style="font-size: 12px; position: relative;">
-                    <i id="volume" class="iconfont icon-volume-1"></i>
-                    <input id="volume-progress-input" data-slider-id="volume-progress"/>
+                    <div class="dropup">
+                        <i id="volume" class="iconfont icon-volume-1" data-toggle="dropdown"></i>
+                        <div class="dropdown-menu dropdown-menu-right" onclick="event.stopPropagation();">
+                            <input id="volume-progress-input" data-slider-id="volume-progress"/>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="d-flex justify-content-center">
@@ -78,6 +82,14 @@
                 </div>
                 <div class="ml-4 align-self-center">
                     <i id="lyric" class="iconfont icon-lyric"></i>
+                </div>
+                <div class="ml-4 align-self-center">
+                    <div class="dropup">
+                        <i id="playlist" class="iconfont icon-playlist" data-toggle="dropdown"></i>
+                        <div class="dropdown-menu dropdown-menu-right" onclick="event.stopPropagation();">
+                            123
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -61,14 +61,14 @@ input#s_song_name:focus {
 }
 .icon-play-cicle:hover, .icon-volume-0:hover, .icon-volume-1:hover,
 .icon-lyric:hover, .icon-prev:hover, .icon-play:hover, .icon-pause:hover, .icon-next:hover,
-.icon-random-play:hover, .icon-single-loop:hover, .icon-list-loop:hover {
+.icon-random-play:hover, .icon-single-loop:hover, .icon-list-loop:hover, .icon-playlist:hover {
     color: #e8e8e8;
 }
 .icon-play-cicle {
     color: #989898;
     cursor: pointer;
 }
-.icon-lyric, .icon-prev, .icon-next, .icon-random-play, .icon-single-loop, .icon-list-loop {
+.icon-lyric, .icon-prev, .icon-next, .icon-random-play, .icon-single-loop, .icon-list-loop, .icon-playlist {
     font-size: 24px;
     color: #989898;
     cursor: pointer;
