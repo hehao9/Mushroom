@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css">
-    <link rel="stylesheet" href="https://at.alicdn.com/t/font_2393058_mhoqe8kgacm.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_2393058_cmjwxjls23q.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" style="height: 40px;">
             <!--                <div class="align-self-center">-->
             <!--                    <img id="album-pic" src="{{ url_for('static', filename='img/record.png') }}" width="46" height="46">-->
             <!--                </div>-->
@@ -72,7 +72,8 @@
                 <i class="iconfont icon-prev"></i>
             </div>
             <div class="ml-4 align-self-center">
-                <i id="play-pause" class="iconfont icon-play"></i>
+                <i id="play-pause" class="iconfont icon-play"
+                   style="background-color: #2d2d2d; padding: 10px; border-radius: 20px;"></i>
             </div>
             <div class="ml-4 align-self-center">
                 <i class="iconfont icon-next"></i>
@@ -85,14 +86,8 @@
             </div>
         </div>
         <div class="playlist-box">
-            <table class="song_table">
-                <tbody>
-                    <tr>
-                        <td>黄昏</td>
-                        <td>周传雄</td>
-                        <td>05:44</td>
-                    </tr>
-                </tbody>
+            <table class="song_table" style="color: #989898;">
+                <tbody></tbody>
             </table>
         </div>
     </div>
