@@ -71,7 +71,7 @@ input#s_song_name:focus {
 }
 .icon-play-cicle:hover, .icon-add:hover, .icon-volume-0:hover, .icon-volume-1:hover,
 .icon-lyric:hover, .icon-lyric1:hover, .icon-prev:hover, .icon-play:hover, .icon-pause:hover, .icon-next:hover,
-.icon-single-loop:hover, .icon-list-loop:hover, .icon-playlist:hover {
+.icon-single-loop:hover, .icon-list-loop:hover, .icon-playlist:hover, .icon-cancel:hover {
     color: #e8e8e8;
 }
 .icon-play-cicle, .icon-add {
@@ -97,10 +97,6 @@ input#s_song_name:focus {
     color: #e8e8e8;
     background-color: #1b1b1c;
 }
-#search_list{
-    overflow: auto;
-    background-color: #1b1b1c;
-}
 .song_table {
     color: #e8e8e8;
     width: 100%;
@@ -115,7 +111,6 @@ input#s_song_name:focus {
 }
 #page-lyric {
     display: none;
-    overflow: auto;
     color: #989898;
     background-color: #242424;
 }
@@ -124,9 +119,20 @@ input#s_song_name:focus {
     line-height: 30px;
 }
 .playlist-box {
-    height: 400px;
+    top: 0px;
     right: 0px;
+    bottom: 0px;
     background-color: #000;
     position: absolute;
     display: none;
+}
+.playing {
+    color: #28a745;
+}
+.playing .icon-list-play {
+    display: block;
+}
+.icon-list-play {
+    display: none;
+    font-size: 12px;
 }

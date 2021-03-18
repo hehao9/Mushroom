@@ -19,24 +19,31 @@
 </head>
 <body>
 <div class="d-flex flex-column" style="position: fixed; top: 0; right: 0; left: 0; bottom: 0;">
-    <div id="search_list" class="flex-grow-1">
-        <div class="d-flex flex-column" style="height: 100%;">
-            <div class="d-flex" style="padding: 9px 15px 4px 15px; border-bottom: 3px solid #28a745;">
-                <div class="align-self-center mr-2">
-                    <i class="iconfont icon-search" style="color: #989898; font-size: 20px;"></i></div>
-                <input id="s_song_name" type="text" class="border-0 flex-grow-1"
-                       autocomplete="off" placeholder=""/>
+    <div class="flex-grow-1" style="overflow: hidden; background-color: #1b1b1c; position: relative;">
+        <div id="search_list" style="height: 100%;">
+            <div class="d-flex flex-column" style="height: 100%;">
+                <div class="d-flex" style="padding: 9px 15px 4px 15px; border-bottom: 3px solid #28a745;">
+                    <div class="align-self-center mr-2">
+                        <i class="iconfont icon-search" style="color: #989898; font-size: 20px;"></i></div>
+                    <input id="s_song_name" type="text" class="border-0 flex-grow-1"
+                           autocomplete="off" placeholder=""/>
+                </div>
+                <div id="s_song_results" class="flex-grow-1 col"></div>
             </div>
-            <div id="s_song_results" class="d-flex flex-grow-1" style="overflow: hidden;"></div>
         </div>
-    </div>
-    <div id="page-lyric" class="flex-grow-1">
-        <div class="d-flex flex-column" style="height: 100%;">
-            <div class="d-flex justify-content-center pt-3 pb-2" style="font-size: 15px;">
-                <div class="song-name" style="color: #e8e8e8"></div>
-                <div class="song-singer ml-2" style="color: #9b9b9b;"></div>
+        <div id="page-lyric" style="height: 100%;">
+            <div class="d-flex flex-column" style="height: 100%;">
+                <div class="d-flex justify-content-center pt-3 pb-2" style="font-size: 15px;">
+                    <div class="song-name" style="color: #e8e8e8"></div>
+                    <div class="song-singer ml-2" style="color: #9b9b9b;"></div>
+                </div>
+                <div id="lyric_result" class="flex-grow-1"></div>
             </div>
-            <div id="lyric_result" class="flex-grow-1"></div>
+        </div>
+        <div class="playlist-box">
+            <table class="song_table" style="color: #989898;">
+                <tbody></tbody>
+            </table>
         </div>
     </div>
     <div id="bottom-bar" class="p-2" style="background-color: #242424; position: relative;">
@@ -82,13 +89,8 @@
                 <i id="lyric" class="iconfont icon-lyric"></i>
             </div>
             <div class="ml-4 align-self-center">
-                <i id="playlist" class="iconfont icon-playlist" data-toggle="dropdown"></i>
+                <i id="playlist" class="iconfont icon-playlist"></i>
             </div>
-        </div>
-        <div class="playlist-box">
-            <table class="song_table" style="color: #989898;">
-                <tbody></tbody>
-            </table>
         </div>
     </div>
 </div>
