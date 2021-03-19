@@ -11,7 +11,7 @@ $(document).ready(function() {
         tooltip: 'hide'
     });
     song_progress.slider('on', 'slide', function(result) {
-        if (audio.currentSrc) {
+        if ($('#audio').attr('src') != '') {
             // 设置当前播放时间显示
             var millis = parseInt(result);
             var seconds = millis % 60;
@@ -48,12 +48,12 @@ $(document).ready(function() {
         }
     });
     song_progress.slider('on', 'slideStart', function(result) {
-        if (audio.currentSrc) {
+        if ($('#audio').attr('src') != '') {
             song_progress_on_slide = true;
         }
     });
     song_progress.slider('on', 'slideStop', function(result) {
-        if (audio.currentSrc) {
+        if ($('#audio').attr('src') != '') {
             audio.currentTime = result;
             if ($('#play-pause').attr('class') == 'iconfont icon-pause'){
                 audio.play();
@@ -80,6 +80,9 @@ $(document).ready(function() {
                         $('.song-singer').text($(this).parent('td').attr('song-singer'));
                         $('#song-duration').text($(this).parent('td').attr('song-duration'));
                         $('#s_song_results').getNiceScroll().resize();
+                        $('#lyric_result').html('');
+                        $('#audio').attr('src', '');
+                        $('#play-pause').attr('class', 'iconfont icon-play');
                         $.get('/music/play/detail/' + $(this).parent('td').attr('song-id'), function(song_detail) {
                             var html = "";
                             $.each(song_detail['lyric'], function(i, v) {
@@ -132,6 +135,9 @@ $(document).ready(function() {
                                 $('.song-singer').text($(this).attr('song-singer'));
                                 $('#song-duration').text($(this).attr('song-duration'));
                                 $('#s_song_results').getNiceScroll().resize();
+                                $('#lyric_result').html('');
+                                $('#audio').attr('src', '');
+                                $('#play-pause').attr('class', 'iconfont icon-play');
                                 $.get('/music/play/detail/' + $(this).attr('song-id'), function(song_detail) {
                                     var html = "";
                                     $.each(song_detail['lyric'], function(i, v) {
@@ -166,6 +172,9 @@ $(document).ready(function() {
                                         $('.song-singer').text(continue_to_play.attr('song-singer'));
                                         $('#song-duration').text(continue_to_play.attr('song-duration'));
                                         $('#s_song_results').getNiceScroll().resize();
+                                        $('#lyric_result').html('');
+                                        $('#audio').attr('src', '');
+                                        $('#play-pause').attr('class', 'iconfont icon-play');
                                         $.get('/music/play/detail/' + continue_to_play.attr('song-id'), function(song_detail) {
                                             var html = "";
                                             $.each(song_detail['lyric'], function(i, v) {
@@ -184,7 +193,22 @@ $(document).ready(function() {
                                         });
                                     } else {
                                         $(this).parents('tr').remove();
-
+                                        $('#album-pic').attr('src', '');
+                                        $('.song-name').text('');
+                                        $('.song-singer').text('');
+                                        $('#song-duration').text('00:00');
+                                        $('#s_song_results').getNiceScroll().resize();
+                                        song_progress.slider('setAttribute', 'max', 0);
+                                        song_progress.slider('setValue', 0);
+                                        $('#lyric_result').html('');
+                                        $('#lyric_result').niceScroll({
+                                            cursorcolor: "#444",
+                                            cursorwidth: 4,
+                                            cursorborder: 0,
+                                            cursorborderradius: 0,
+                                        });
+                                        $('#audio').attr('src', '');
+                                        $('#play-pause').attr('class', 'iconfont icon-play');
                                     }
                                 } else {
                                     $(this).parents('tr').remove();
@@ -197,7 +221,7 @@ $(document).ready(function() {
         };
     });
     $('#play-pause').click(function() {
-        if (audio.currentSrc) {
+        if ($('#audio').attr('src') != '') {
             if (audio.paused) {
                 $(this).attr('class', 'iconfont icon-pause');
                 audio.play();
@@ -289,6 +313,9 @@ $(document).ready(function() {
                             $('.song-singer').text(continue_to_play.attr('song-singer'));
                             $('#song-duration').text(continue_to_play.attr('song-duration'));
                             $('#s_song_results').getNiceScroll().resize();
+                            $('#lyric_result').html('');
+                            $('#audio').attr('src', '');
+                            $('#play-pause').attr('class', 'iconfont icon-play');
                             $.get('/music/play/detail/' + continue_to_play.attr('song-id'), function(song_detail) {
                                 var html = "";
                                 $.each(song_detail['lyric'], function(i, v) {
@@ -378,6 +405,9 @@ $(document).ready(function() {
             $('.song-singer').text(continue_to_play.attr('song-singer'));
             $('#song-duration').text(continue_to_play.attr('song-duration'));
             $('#s_song_results').getNiceScroll().resize();
+            $('#lyric_result').html('');
+            $('#audio').attr('src', '');
+            $('#play-pause').attr('class', 'iconfont icon-play');
             $.get('/music/play/detail/' + continue_to_play.attr('song-id'), function(song_detail) {
                 var html = "";
                 $.each(song_detail['lyric'], function(i, v) {
@@ -411,6 +441,9 @@ $(document).ready(function() {
             $('.song-singer').text(continue_to_play.attr('song-singer'));
             $('#song-duration').text(continue_to_play.attr('song-duration'));
             $('#s_song_results').getNiceScroll().resize();
+            $('#lyric_result').html('');
+            $('#audio').attr('src', '');
+            $('#play-pause').attr('class', 'iconfont icon-play');
             $.get('/music/play/detail/' + continue_to_play.attr('song-id'), function(song_detail) {
                 var html = "";
                 $.each(song_detail['lyric'], function(i, v) {
