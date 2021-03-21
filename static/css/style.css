@@ -109,10 +109,13 @@ input#s_song_name:focus {
 .song_table tbody tr:hover {
     background-color: #242424;
 }
+.playlist-box .song_table tbody tr:hover {
+    background-color: #1b1b1c;
+}
 #page-lyric {
     display: none;
     color: #989898;
-    background-color: #242424;
+    background-color: #1b1b1c;
 }
 #lyric_result {
     font-size: 14px;
@@ -122,7 +125,7 @@ input#s_song_name:focus {
     top: 0px;
     right: 0px;
     bottom: 0px;
-    background-color: #000;
+    background-color: #242424;
     position: absolute;
     display: none;
 }
