@@ -103,7 +103,7 @@ $(document).ready(function() {
                     $('.icon-add').click(function() {
                         var added = false;
                         var song_id = $(this).parent('td').attr('song-id');
-                        $(".playlist-box > table > tbody > tr").each(function(){
+                        $("#playlist-tab > table > tbody > tr").each(function(){
                             if ($(this).attr('song-id') == song_id) {
                                 added = true;
                                 return false;
@@ -115,19 +115,21 @@ $(document).ready(function() {
                             'song-singer="' + $(this).parent('td').attr('song-singer') + '"' +
                             'album-pic="' + $(this).parent('td').attr('album-pic') +  '"' +
                             'song-duration="' + $(this).parent('td').attr('song-duration') + '">' +
-                            '<td><i class="iconfont icon-list-play"></i></td>' +
+                            '<td><i class="iconfont icon-list-play" style="font-size: 12px;"></i></td>' +
                             '<td>' + $(this).parent('td').attr('song-name') + '</td>' +
                             '<td>' + $(this).parent('td').attr('song-singer') + '</td>' +
                             '<td>' + $(this).parent('td').attr('song-duration') +'</td>' +
-                            '<td><i class="iconfont icon-cancel" style="font-size: 12px;"></i></td></tr>';
-                            $('.playlist-box > table > tbody').append(html);
-                            $('.playlist-box').niceScroll({
+                            '<td><i class="iconfont icon-cancel"></i></td></tr>';
+                            $('#playlist-tab > table > tbody').append(html);
+                            $('#playlist-count').text($('#playlist-tab > table > tbody > tr').length);
+                            $('#playlist-tab').niceScroll({
                                 cursorcolor: "#444",
                                 cursorwidth: 4,
                                 cursorborder: 0,
                                 cursorborderradius: 0,
                             });
-                            $('.playlist-box tr[song-id=' + song_id + ']').click(function() {
+                            $('#s_song_results').getNiceScroll().resize();
+                            $('#playlist-tab tr[song-id=' + song_id + ']').click(function() {
                                 $(this).siblings().removeClass('playing');
                                 $(this).addClass('playing');
                                 $('#album-pic').attr('src', $(this).attr('album-pic'));
@@ -155,14 +157,14 @@ $(document).ready(function() {
                                     audio.play();
                                 });
                             });
-                            $('.playlist-box tr[song-id=' + song_id + '] .icon-cancel').click(function() {
+                            $('#playlist-tab tr[song-id=' + song_id + '] .icon-cancel').click(function() {
                                 if ($(this).parents('tr').hasClass('playing')) {
-                                    if ($('.playlist-box > table > tbody > tr').length > 1) {
+                                    if ($('#playlist-tab > table > tbody > tr').length > 1) {
                                         var continue_to_play = 0;
-                                        if ($('.playlist-box > table > tbody > tr.playing').next().attr('song-id')) {
-                                            continue_to_play = $('.playlist-box > table > tbody > tr.playing').next();
+                                        if ($('#playlist-tab > table > tbody > tr.playing').next().attr('song-id')) {
+                                            continue_to_play = $('#playlist-tab > table > tbody > tr.playing').next();
                                         } else {
-                                            continue_to_play = $('.playlist-box > table > tbody > tr:first-child');
+                                            continue_to_play = $('#playlist-tab > table > tbody > tr:first-child');
                                         }
                                         $(this).parents('tr').remove();
                                         continue_to_play.siblings().removeClass('playing');
@@ -213,6 +215,8 @@ $(document).ready(function() {
                                 } else {
                                     $(this).parents('tr').remove();
                                 }
+                                $('#playlist-count').text($('#playlist-tab > table > tbody > tr').length);
+                                $('#s_song_results').getNiceScroll().resize();
                             });
                         }
                     });
@@ -272,6 +276,11 @@ $(document).ready(function() {
             } else {
                 $('#playlist').css('color', '');
             }
+            if ($('#page-lyric').css('display') == 'block') {
+                $('#lyric_result').getNiceScroll().resize();
+            } else {
+                $('#s_song_results').getNiceScroll().resize();
+            }
         });
     });
     $('#lyric').click(function() {
@@ -299,12 +308,12 @@ $(document).ready(function() {
                 audio.currentTime = 0;
                 setTimeout(function() {
                     if ($('#play-rule').attr('class') == 'iconfont icon-list-loop') {
-                        if ($('.playlist-box > table > tbody > tr').length > 1) {
+                        if ($('#playlist-tab > table > tbody > tr').length > 1) {
                             var continue_to_play = 0;
-                            if ($('.playlist-box > table > tbody > tr.playing').next().attr('song-id')) {
-                                continue_to_play = $('.playlist-box > table > tbody > tr.playing').next();
+                            if ($('#playlist-tab > table > tbody > tr.playing').next().attr('song-id')) {
+                                continue_to_play = $('#playlist-tab > table > tbody > tr.playing').next();
                             } else {
-                                continue_to_play = $('.playlist-box > table > tbody > tr:first-child');
+                                continue_to_play = $('#playlist-tab > table > tbody > tr:first-child');
                             }
                             continue_to_play.siblings().removeClass('playing');
                             continue_to_play.addClass('playing');
@@ -391,12 +400,12 @@ $(document).ready(function() {
         }
     });
     $('.icon-next').click(function() {
-        if ($('.playlist-box > table > tbody > tr').length > 1) {
+        if ($('#playlist-tab > table > tbody > tr').length > 1) {
             var continue_to_play = 0;
-            if ($('.playlist-box > table > tbody > tr.playing').next().attr('song-id')) {
-                continue_to_play = $('.playlist-box > table > tbody > tr.playing').next();
+            if ($('#playlist-tab > table > tbody > tr.playing').next().attr('song-id')) {
+                continue_to_play = $('#playlist-tab > table > tbody > tr.playing').next();
             } else {
-                continue_to_play = $('.playlist-box > table > tbody > tr:first-child');
+                continue_to_play = $('#playlist-tab > table > tbody > tr:first-child');
             }
             continue_to_play.siblings().removeClass('playing');
             continue_to_play.addClass('playing');
@@ -427,12 +436,12 @@ $(document).ready(function() {
         }
     });
     $('.icon-prev').click(function() {
-        if ($('.playlist-box > table > tbody > tr').length > 1) {
+        if ($('#playlist-tab > table > tbody > tr').length > 1) {
             var continue_to_play = 0;
-            if ($('.playlist-box > table > tbody > tr.playing').prev().attr('song-id')) {
-                continue_to_play = $('.playlist-box > table > tbody > tr.playing').prev();
+            if ($('#playlist-tab > table > tbody > tr.playing').prev().attr('song-id')) {
+                continue_to_play = $('#playlist-tab > table > tbody > tr.playing').prev();
             } else {
-                continue_to_play = $('.playlist-box > table > tbody > tr:last-child');
+                continue_to_play = $('#playlist-tab > table > tbody > tr:last-child');
             }
             continue_to_play.siblings().removeClass('playing');
             continue_to_play.addClass('playing');

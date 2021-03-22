@@ -1,17 +1,6 @@
 body {
     font-size: 14px!important;
 }
-/*::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-}
-::-webkit-scrollbar-thumb{
-    border-radius: 0px;
-    background-color: #444;
-}
-::-webkit-scrollbar-corner {
-    display: none;
-}*/
 input#s_song_name:focus {
     outline: 0;
     box-shadow: none!important;
@@ -71,10 +60,16 @@ input#s_song_name:focus {
 }
 .icon-play-cicle:hover, .icon-add:hover, .icon-volume-0:hover, .icon-volume-1:hover,
 .icon-lyric:hover, .icon-lyric1:hover, .icon-prev:hover, .icon-play:hover, .icon-pause:hover, .icon-next:hover,
-.icon-single-loop:hover, .icon-list-loop:hover, .icon-playlist:hover, .icon-cancel:hover {
+.icon-single-loop:hover, .icon-list-loop:hover, .icon-playlist:hover, .icon-cancel:hover, .icon-del:hover {
     color: #e8e8e8;
 }
 .icon-play-cicle, .icon-add {
+    font-size: 14px;
+    color: #989898;
+    cursor: pointer;
+}
+.icon-del {
+    font-size: 15px;
     color: #989898;
     cursor: pointer;
 }
@@ -83,7 +78,7 @@ input#s_song_name:focus {
     color: #989898;
     cursor: pointer;
 }
-.icon-volume-0, .icon-volume-1 {
+.icon-volume-0, .icon-volume-1, .icon-cancel {
     font-size: 12px;
     color: #989898;
     cursor: pointer;
@@ -116,17 +111,10 @@ input#s_song_name:focus {
     display: none;
     color: #989898;
     background-color: #1b1b1c;
-}
-#lyric_result {
-    font-size: 14px;
     line-height: 30px;
 }
 .playlist-box {
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
     background-color: #242424;
-    position: absolute;
     display: none;
 }
 .playing {
@@ -137,5 +125,4 @@ input#s_song_name:focus {
 }
 .icon-list-play {
     display: none;
-    font-size: 12px;
 }
