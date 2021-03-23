@@ -5,6 +5,8 @@ import base64
 import requests
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
+import urllib3
+urllib3.disable_warnings()
 
 
 def make_random_str():
@@ -51,7 +53,7 @@ def request_url(url, text):
     headers = {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36',
     }
-    response = requests.post(url, data=data, headers=headers)
+    response = requests.post(url, data=data, headers=headers, verify=False)
     return response.json()
 
 
@@ -76,7 +78,6 @@ def get_music_search(song_name):
                     'name': song.get('name'),
                     'singer': song.get('ar')[0].get('name'),
                     'album': song.get('al').get('name'),
-                    'album_pic': song.get('al').get('picUrl'),
                     'duration': duration,
                 })
     return song_list
@@ -108,5 +109,5 @@ def get_music_detail(song_id):
 
 
 if __name__ == '__main__':
-    # print(search('寂寞沙洲冷'))
-    print(get_music_detail(1822207727))
+    print(get_music_search('寂寞沙洲冷'))
+    # print(get_music_detail(1822207727))

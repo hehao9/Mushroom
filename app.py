@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask import render_template
-from util import get_music_search, get_music_detail
+import netease_cloud_music
+import kugou_music
 
 app = Flask(__name__)
 
@@ -18,15 +19,18 @@ def music():
 @app.route('/music/search/<song_name>')
 def music_search(song_name):
     results = [{
-        'platform': '网易云音乐',
-        'song_list': get_music_search(song_name),
+        'platform': '网易云',
+        'song_list': netease_cloud_music.get_music_search(song_name),
+    }, {
+        'platform': '酷狗',
+        'song_list': kugou_music.get_music_search(song_name),
     }]
     return render_template('song_list.html', results=results)
 
 
 @app.route('/music/play/detail/<int:song_id>')
 def music_detail(song_id):
-    return jsonify(get_music_detail(song_id))
+    return jsonify(netease_cloud_music.get_music_detail(song_id))
 
 
 if __name__ == '__main__':
