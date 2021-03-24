@@ -126,3 +126,23 @@ input#s_song_name:focus {
 .icon-list-play {
     display: none;
 }
+.s_song_tabs ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.s_song_tabs > ul > li > a {
+    color: #989898;
+    background-color: #242424;
+    line-height: 30px;
+    padding-left: 15px;
+    display: block;
+}
+.s_song_tabs > ul > li > a:hover {
+    color: #e8e8e8;
+    text-decoration: none;
+}
+.s_song_tabs > ul > li.active > a {
+    color: #28a745;
+    background-color: #2d2d2d;
+}

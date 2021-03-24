@@ -4,10 +4,10 @@ import urllib3
 urllib3.disable_warnings()
 
 
-def request_url(url):
+def request_url(url, song_name):
     params = {
         'callback': '',
-        'keyword': '寂寞沙洲冷',
+        'keyword': song_name,
         'page': 1,
         'pagesize': 30,
         'bitrate': 0,
@@ -56,7 +56,7 @@ def get_music_search(song_name):
     song_list = []
     if song_name.strip():
         url = 'https://complexsearch.kugou.com/v2/search/song'
-        resp_json = request_url(url)
+        resp_json = request_url(url, song_name)
         if resp_json.get('status') == 1:
             songs = resp_json.get('data').get('lists')
             for song in songs:
@@ -68,7 +68,7 @@ def get_music_search(song_name):
                 duration = f'{minutes}:{seconds}'
                 song_list.append({
                     'id': song.get('ID'),
-                    'name': song.get('SongName'),
+                    'name': song.get('SongName').replace('<em>', '').replace('</em>', ''),
                     'singer': song.get('SingerName'),
                     'album': song.get('AlbumName'),
                     'duration': duration,
@@ -102,5 +102,5 @@ def get_music_detail(song_id):
 
 
 if __name__ == '__main__':
-    print(get_music_search('寂寞沙洲冷'))
-    # print(get_music_detail(1822207727))
+    # print(get_music_search('寂寞沙洲冷'))
+    print(get_music_detail(1822207727))

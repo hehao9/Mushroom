@@ -15,6 +15,7 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.staticfile.org/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
     <script src="https://cdn.staticfile.org/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery.tabslet.js/1.4.4/jquery.tabslet.min.js"></script>
     <script src="{{ url_for('static', filename='js/music.js') }}"></script>
 </head>
 <body>
@@ -23,13 +24,13 @@
         <div class="flex-grow-1" style="height: 100%;">
             <div id="search_list" style="height: 100%;">
                 <div class="d-flex flex-column" style="height: 100%;">
-                    <div class="d-flex" style="padding: 9px 15px 4px 15px; border-bottom: 3px solid #28a745;">
+                    <div class="d-flex" style="padding: 7px 15px 4px 15px; border-bottom: 3px solid #28a745;">
                         <div class="align-self-center mr-2">
                             <i class="iconfont icon-search" style="color: #989898; font-size: 20px;"></i></div>
                         <input id="s_song_name" type="text" class="border-0 flex-grow-1"
                                autocomplete="off" placeholder=""/>
                     </div>
-                    <div id="s_song_results" class="flex-grow-1" style="padding: 7px 15px;"></div>
+                    <div id="s_song_results" class="flex-grow-1" style="overflow: hidden;"></div>
                 </div>
             </div>
             <div id="page-lyric" style="height: 100%;">
@@ -45,7 +46,7 @@
         <div class="playlist-box" style="height: 100%;">
             <div class="d-flex flex-column" style="height: 100%;">
                 <div class="d-flex justify-content-between" style="padding: 0px 7px; background-color: #242424; line-height: 30px;">
-                    <div style="color: #e8e8e8;">播放列表 / <span id="playlist-count">0</span></div>
+                    <div style="color: #e8e8e8;">播放列表 (<span id="playlist-count">0</span>)</div>
                     <div><i class="iconfont icon-del" title="清空列表"></i></div>
                 </div>
                 <div id="playlist-tab" class="flex-grow-1">
