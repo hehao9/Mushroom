@@ -8,7 +8,7 @@
     <div id='{{ result.alias }}' class="flex-grow-1" style="padding: 0px 15px 7px 15px;">
         <table class="song_table">
             <thead>
-                <tr>
+                <tr style="color: #989898;">
                     <th></th>
                     <th>歌曲标题</th>
                     <th>歌手</th>
@@ -20,7 +20,8 @@
             {% for song in result.song_list %}
             <tr>
                 <td song-id="{{ song.id }}" song-name="{{ song.name }}" song-singer="{{ song.singer }}"
-                    song-duration="{{ song.duration }}" song-platform="{{ result.alias }}">
+                    song-duration="{{ song.duration }}" song-platform="{{ result.alias }}"
+                    song-album-id="{{ song.album_id }}" song-hash="{{ song.hash }}">
                     <i class="iconfont icon-play-cicle" style="font-size: 14px;"></i>
                     <i class="iconfont icon-add" style="font-size: 14px;"></i>
                 </td>

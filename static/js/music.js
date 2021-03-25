@@ -96,7 +96,14 @@ $(document).ready(function() {
         }
         $('#audio').attr('src', '');
         $('#play-pause').attr('class', 'iconfont icon-play');
-        $.get('/music/play/detail/'+ data_ele.attr('song-platform') +'/' + data_ele.attr('song-id'), function(song_detail) {
+//        $.get('/music/play/detail/'+ data_ele.attr('song-platform') +'/' + data_ele.attr('song-id'), function(song_detail) {
+        var params = {
+            song_platform: data_ele.attr('song-platform'),
+            song_id: data_ele.attr('song-id'),
+            song_album_id: data_ele.attr('song-album-id'),
+            song_hash: data_ele.attr('song-hash'),
+        }
+        $.post("/music/play/detail", params, function(song_detail){
             var html = "";
             $.each(song_detail['lyric'], function(i, v) {
                 html += '<div class="text-center" t=' + v.t + '>' + v.c + '</div>';
@@ -152,7 +159,9 @@ $(document).ready(function() {
                             'song-name="' + $(this).parent('td').attr('song-name') + '"' +
                             'song-singer="' + $(this).parent('td').attr('song-singer') + '"' +
                             'song-duration="' + $(this).parent('td').attr('song-duration') + '"' +
-                            'song-platform="' + $(this).parent('td').attr('song-platform') + '">' +
+                            'song-platform="' + $(this).parent('td').attr('song-platform') + '"' +
+                            'song-album-id="' + $(this).parent('td').attr('song-album-id') + '"' +
+                            'song-hash="' + $(this).parent('td').attr('song-hash') + '">' +
                             '<td><i class="iconfont icon-list-play" style="font-size: 12px;"></i></td>' +
                             '<td>' + $(this).parent('td').attr('song-name') + '</td>' +
                             '<td>' + $(this).parent('td').attr('song-singer') + '</td>' +
@@ -238,7 +247,9 @@ $(document).ready(function() {
                             'song-name="' + $(this).parent('td').attr('song-name') + '"' +
                             'song-singer="' + $(this).parent('td').attr('song-singer') + '"' +
                             'song-duration="' + $(this).parent('td').attr('song-duration') + '"' +
-                            'song-platform="' + $(this).parent('td').attr('song-platform') + '">' +
+                            'song-platform="' + $(this).parent('td').attr('song-platform') + '"' +
+                            'song-album-id="' + $(this).parent('td').attr('song-album-id') + '"' +
+                            'song-hash="' + $(this).parent('td').attr('song-hash') + '">' +
                             '<td><i class="iconfont icon-list-play" style="font-size: 12px;"></i></td>' +
                             '<td>' + $(this).parent('td').attr('song-name') + '</td>' +
                             '<td>' + $(this).parent('td').attr('song-singer') + '</td>' +

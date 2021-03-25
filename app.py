@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask import render_template
 import netease_cloud_music
 import kugou_music
@@ -30,12 +30,13 @@ def music_search(song_name):
     return render_template('song_list.html', results=results)
 
 
-@app.route('/music/play/detail/<string:song_platform>/<int:song_id>')
-def music_detail(song_platform, song_id):
+@app.route('/music/play/detail', methods=['post'])
+def music_detail():
+    song_platform = request.form['song_platform']
     if song_platform == 'netease-cloud':
-        return jsonify(netease_cloud_music.get_music_detail(song_id))
+        return jsonify(netease_cloud_music.get_music_detail(request.form['song_id']))
     if song_platform == 'kugou':
-        return jsonify(kugou_music.get_music_detail(song_id))
+        return jsonify(kugou_music.get_music_detail(request.form['song_album_id'], request.form['song_hash']))
 
 
 if __name__ == '__main__':

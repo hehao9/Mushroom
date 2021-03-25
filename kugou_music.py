@@ -69,28 +69,35 @@ def get_music_search(song_name):
                 song_list.append({
                     'id': song.get('ID'),
                     'name': song.get('SongName').replace('<em>', '').replace('</em>', ''),
-                    'singer': song.get('SingerName'),
+                    'singer': song.get('SingerName').replace('<em>', '').replace('</em>', ''),
                     'album': song.get('AlbumName'),
                     'duration': duration,
+                    'hash': song.get('FileHash'),
+                    'album_id': song.get('AlbumID'),
                 })
     return song_list
 
 
-def get_music_detail(song_id):
-    url = 'https://music.163.com/weapi/song/enhance/player/url/v1?csrf_token='
-    text = {"ids": [song_id], "level": "standard", "encodeType": "aac", "csrf_token": ""}
-    resp_json = request_url(url, text)
+def get_music_detail(song_album_id, song_hash):
+    url = 'https://wwwapi.kugou.com/yy/index.php'
+    params = {
+        'r': 'play/getdata',
+        'callback': '',
+        'hash': song_hash,
+        'dfid': '3LJU5C366X0m3eWiYv22uBHs',
+        'mid': '81bd157c0801a143219e2b7e401b0029',
+        'platid': 4,
+        'album_id': song_album_id,
+        '_': 1616635942567,
+    }
+    response = requests.get(url, params=params, verify=False)
+    resp_json = response.json()
     song_url = ''
-    if resp_json.get('code') == 200:
-        song_url = resp_json.get('data')[0].get('url')
-
-    url = 'https://music.163.com/weapi/song/lyric?csrf_token='
-    text = {"id": song_id, "lv": -1, "tv": -1, "csrf_token": ""}
-    resp_json = request_url(url, text)
     song_lyric = []
-    if resp_json.get('code') == 200:
-        lyric = resp_json.get('lrc').get('lyric')
-        line_lyrics = lyric.split('\n')
+    if resp_json.get('status') == 1:
+        song_url = resp_json.get('data').get('play_url')
+        lyric = resp_json.get('data').get('lyrics')
+        line_lyrics = lyric.split('\r\n')
         for line_lyric in line_lyrics:
             if line_lyric != '' and line_lyric.split(']')[1] != '':
                 time_str = line_lyric.split(']')[0].split('[')[1]
@@ -103,4 +110,4 @@ def get_music_detail(song_id):
 
 if __name__ == '__main__':
     # print(get_music_search('寂寞沙洲冷'))
-    print(get_music_detail(1822207727))
+    print(get_music_detail(964612, '843E2868FC13FA5D59322C629216FD59'))
