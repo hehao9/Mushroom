@@ -6,10 +6,9 @@
     <title>Music</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/蘑菇.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_2393058_cmjwxjls23q.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/music.css') }}">
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -20,17 +19,17 @@
 </head>
 <body>
 <div class="d-flex flex-column" style="position: fixed; top: 0; right: 0; left: 0; bottom: 0;">
-    <div class="d-flex flex-grow-1" style="overflow: hidden; background-color: #1b1b1c;">
+    <div class="d-flex flex-grow-1" style="overflow: hidden;">
         <div class="flex-grow-1" style="height: 100%;">
             <div id="search_list" style="height: 100%;">
                 <div class="d-flex flex-column" style="height: 100%;">
-                    <div class="d-flex" style="background-color: #242424; padding: 7px 15px 4px 15px; border-bottom: 3px solid #28a745;">
+                    <div class="d-flex" style="background-color: #242424; padding: 7px 15px 4px 15px; border-bottom: 2px solid #28a745;">
                         <div class="align-self-center mr-2">
                             <i class="iconfont icon-search" style="color: #989898; font-size: 20px;"></i></div>
                         <input id="s_song_name" type="text" class="border-0 flex-grow-1"
                                autocomplete="off" placeholder=""/>
                     </div>
-                    <div id="s_song_results" class="flex-grow-1" style="overflow: hidden; background-color: #1b1b1c;"></div>
+                    <div id="s_song_results" class="flex-grow-1" style="overflow: hidden;"></div>
                 </div>
             </div>
             <div id="page-lyric" style="height: 100%;">
@@ -80,9 +79,6 @@
             </div>
         </div>
         <div class="d-flex justify-content-center" style="height: 40px;">
-            <!--                <div class="align-self-center">-->
-            <!--                    <img id="album-pic" src="{{ url_for('static', filename='img/record.png') }}" width="46" height="46">-->
-            <!--                </div>-->
             <div class="align-self-center">
                 <i id="play-rule" class="iconfont icon-list-loop" title="列表循环"></i>
             </div>

@@ -1,4 +1,5 @@
 body {
+    background-color: #1b1b1c;
     font-size: 14px!important;
 }
 input#s_song_name:focus {
@@ -7,7 +8,7 @@ input#s_song_name:focus {
 }
 #song-progress {
     width: 100%;
-    height: 2px;
+    height: 1px;
     display: block;
 }
 .volume-box {
@@ -25,11 +26,11 @@ input#s_song_name:focus {
     color: #e8e8e8;
 }
 #volume-progress {
-    width: 2px;
+    width: 1px;
     height: 100px;
 }
 #song-progress .slider-track {
-    height: 2px;
+    height: 1px;
     margin-top: 0px;
     top: 0;
 }
@@ -47,14 +48,14 @@ input#s_song_name:focus {
     margin-left: -3px;
     margin-top: -2px;
     width: 6px;
-    height: 6px;
+    height: 5px;
     background: #28a745;
 }
 #volume-progress .slider-handle {
     /* display: none; */
     margin-left: -2px;
     margin-top: -3px;
-    width: 6px;
+    width: 5px;
     height: 6px;
     background: #28a745;
 }
@@ -114,7 +115,6 @@ input#s_song_name:focus {
 #page-lyric {
     display: none;
     color: #989898;
-    background-color: #1b1b1c;
     line-height: 30px;
 }
 .playlist-box {
