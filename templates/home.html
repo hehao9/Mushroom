@@ -22,4 +22,14 @@
     </div>
 </div>
 </body>
+<script>
+  function initFingerprintJS() {
+    FingerprintJS.load().then(fp => {
+      fp.get().then(result => {
+        $('body').append('<input id="visitor_id" type="hidden" value="' + result.visitorId + '" />');
+      });
+    });
+  }
+</script>
+<script async src="//cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js" onload="initFingerprintJS()"></script>
 </html>

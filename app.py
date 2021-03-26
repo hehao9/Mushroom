@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask import render_template
 import netease_cloud_music
 import kugou_music
+from sqlite3_help import Sqlite3DB
 
 app = Flask(__name__)
 
@@ -14,6 +15,14 @@ def hello_world():
 @app.route('/music')
 def music():
     return render_template('music.html')
+
+
+@app.route('/music/play/list', methods=['post'])
+def music_play_list():
+    db = Sqlite3DB()
+    results = db.query_data(f"select * from song_play_list where visitor_id = '{request.form['visitor_id']}'")
+    db.close()
+    return jsonify(results)
 
 
 @app.route('/music/search/<song_name>')

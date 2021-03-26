@@ -27,7 +27,7 @@
                         <div class="align-self-center mr-2">
                             <i class="iconfont icon-search" style="color: #989898; font-size: 20px;"></i></div>
                         <input id="s_song_name" type="text" class="border-0 flex-grow-1"
-                               autocomplete="off" placeholder=""/>
+                               autocomplete="off" placeholder="" />
                     </div>
                     <div id="s_song_results" class="flex-grow-1" style="overflow: hidden;"></div>
                 </div>
@@ -102,4 +102,14 @@
     </div>
 </div>
 </body>
+<script>
+  function initFingerprintJS() {
+    FingerprintJS.load().then(fp => {
+      fp.get().then(result => {
+        $('body').append('<input id="visitor_id" type="hidden" value="' + result.visitorId + '" />');
+      });
+    });
+  }
+</script>
+<script async src="//cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js" onload="initFingerprintJS()"></script>
 </html>
