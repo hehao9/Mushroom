@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $.ajaxSettings.async = false;
     $('#s_song_name').focus();
     var audio = document.getElementById('audio');
     audio.volume = 0.5;
@@ -9,7 +10,7 @@ $(document).ready(function() {
         cursorborderradius: 0,
     });
     setTimeout(function () {
-        console.log($('#visitor_id').val());
+        //console.log($('#visitor_id').val());
         $.post("/music/play/list", {visitor_id: $('#visitor_id').val()}, function(play_list){
             var html = "";
             $.each(play_list, function(i, v) {
@@ -34,6 +35,8 @@ $(document).ready(function() {
                 play_song($(this));
             });
             $('#playlist-tab > table > tbody > tr:first-child').click();
+            $('#play-pause').attr('class', 'iconfont icon-play');
+            audio.pause();
             $('#playlist-tab tr[song-id] .icon-cancel').click(function() {
                 if ($(this).parents('tr').hasClass('playing')) {
                     if ($('#playlist-tab > table > tbody > tr').length > 1) {
@@ -82,7 +85,7 @@ $(document).ready(function() {
                 }
             });
         });
-    }, 500)
+    }, 500);
     $('#playlist-tab').niceScroll({
         cursorcolor: "#444",
         cursorwidth: 4,
