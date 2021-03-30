@@ -12,7 +12,33 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": ["background.js"],
+    "scripts": [
+      "background.js"
+    ],
     "persistent": false
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "style.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    "inject.js"
+  ],
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "notifications",
+    "webRequestBlocking",
+    "storage"
+  ]
 }

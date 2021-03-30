@@ -14,8 +14,14 @@
     <script src="https://cdn.staticfile.org/jquery.tabslet.js/1.4.4/jquery.tabslet.min.js"></script>
 </head>
 <body>
-    <div style="position: fixed; top: 0; right: 0; left: 0; bottom: 0;">
-        <iframe id="ifr" src="https://huaban.com/" width="100%" height="100%"></iframe>
-    </div>
+    <button id="mybutton">click me</button>
+    <script>
+      var greeting = "hello, ";
+      var button = document.getElementById("mybutton");
+      button.person_name = "Bob";
+      button.addEventListener("click", function() {
+        alert(greeting + button.person_name + ".");
+      }, false);
+    </script>
 </body>
 </html>
